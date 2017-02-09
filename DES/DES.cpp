@@ -62,7 +62,7 @@ int getKeyType(string strIn) {
 }
 //Checks valid mode - ARM
 bool validMode(string mode) {
-	if (mode == "ECB" || mode == "CBC") {
+	if (mode == "ECB " || mode == "CBC ") {
 		return true;
 	}
 	else{
@@ -70,20 +70,12 @@ bool validMode(string mode) {
 		return false;
 	}
 }
-//Checks valid infile - ARM
-bool validInFile(string strIn) {
-	strIn = upCase(strIn.substr(2));
-	return true;
-}
-//Checks valid outfile - ARM
-bool validOutFile(string strIn) {
-	strIn = upCase(strIn.substr(2));
-	return true;
-}
 
 int main()
 {
-	string strIn, cmd, action, key, mode, infile, outfile;
+	string strIn, cmd, action, key, mode, inFilename, outFilename;
+	ifstream inFile;
+	ofstream outFile;
 	bool validEntry = false;
 	cout << "Welcome to Aaron's DES Encrypter/Decrypter!" << endl;
 	while (!validEntry) {
@@ -97,31 +89,42 @@ int main()
 				action = action.substr(1, 2);
 				strIn = strIn.substr(3, strIn.length());
 				keyType = getKeyType(strIn);
-				if (keyType == 1) {
-					key = strIn.substr(0, 16);
-					strIn = strIn.substr(17, strIn.length());
+				if (keyType == 0) {
+					break;
 				}
-				else if (keyType == 2) {
-					key = strIn.substr(1, 8);
-					strIn = strIn.substr(11, strIn.length());
+				else {
+					if (keyType == 1) {
+						key = strIn.substr(0, 16);
+						strIn = strIn.substr(17, strIn.length());
+					}
+					else if (keyType == 2) {
+						key = strIn.substr(1, 8);
+						strIn = strIn.substr(11, strIn.length());
+					}
+					else if (keyType == 3) {
+						key = strIn.substr(2, 8);
+						strIn = strIn.substr(13, strIn.length());
+					}
+					if (validMode(strIn)) {
+						mode = strIn.substr(0, 3);
+						strIn = strIn.substr(4, strIn.length());
+						inFilename = strIn.substr(0, strIn.find_first_of(" "));
+						inFile.open(inFilename);
+						if (!inFile) {
+							cout << "Can't open input file " << inFilename << endl;
+							break;
+						}
+						strIn = strIn.substr(strIn.find_first_of(" "), strIn.length());
+						outFilename = strIn.substr(1, strIn.find_first_of(" "));
+						outFile.open(outFilename);
+						if (!outFile) {
+							cout << "Can't open output file " << outFilename << endl;
+							break;
+						}
+						validEntry = true;
+					}
 				}
-				else if (keyType == 3) {
-					key = strIn.substr(2, 8);
-					strIn = strIn.substr(13, strIn.length());
-
-				}
-
-
-
-
-
-
-
-
-		}
-			infile = strIn.substr();
-			outfile = strIn.substr();
-
+			}
 		}
 	}
 	return 0;

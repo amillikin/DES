@@ -36,6 +36,10 @@ bool validAction(string action) {
 }
 //Returns type of key used: 1) Hex, 2) 8-char (no space) 3) 8-char (with spaces). Else 0 if not valid. - ARM
 int getKeyType(string strIn) {
+	if (strIn == "") {
+		cout << "Not a valid key. Must be 16-bit hex or 8-char" << endl;
+		return 0;
+	}
 	if (strIn.find_first_of(" ") == 16) {
 		for (int i = 0; i < 16; i++) {
 			if (!isxdigit(strIn[i])) {

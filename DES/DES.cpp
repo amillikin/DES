@@ -9,14 +9,9 @@
 
 using namespace std;
 typedef unsigned long long ull;
-typedef unsigned long ul;
 typedef const unsigned char uc;
 int keyType;
 ull roundkey[16];
-const ull oneULL = 0x0000000000000001;
-const ull right32f = 0x00000000ffffffff;
-const ull right28f = 0x000000000fffffff;
-const ul oneUL = 0x00000001;
 
 //Final Permutation for 64-bit block - ARM
 ull fp(ull block) {
@@ -32,134 +27,136 @@ ull fp(ull block) {
 	33	1	41	9	49	17	57	25
 	*/
 	ull pBlock = 0;
+	pBlock |= ((block >> 24) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 24) & oneULL);
+	pBlock |= ((block >> 56) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 56) & oneULL);
+	pBlock |= ((block >> 16) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 16) & oneULL);
+	pBlock |= ((block >> 48) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 48) & oneULL);
+	pBlock |= ((block >> 8) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 8) & oneULL);
+	pBlock |= ((block >> 40) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 40) & oneULL);
+	pBlock |= (block & 0x1);
 	pBlock <<= 1;
-	pBlock |= (block & oneULL);
+	pBlock |= ((block >> 32) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 32) & oneULL);
+	pBlock |= ((block >> 25) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 25) & oneULL);
+	pBlock |= ((block >> 57) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 57) & oneULL);
+	pBlock |= ((block >> 17) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 17) & oneULL);
+	pBlock |= ((block >> 49) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 49) & oneULL);
+	pBlock |= ((block >> 9) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 9) & oneULL);
+	pBlock |= ((block >> 41) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 41) & oneULL);
+	pBlock |= ((block >> 1) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 1) & oneULL);
+	pBlock |= ((block >> 33) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 33) & oneULL);
+	pBlock |= ((block >> 26) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 26) & oneULL);
+	pBlock |= ((block >> 58) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 58) & oneULL);
+	pBlock |= ((block >> 18) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 18) & oneULL);
+	pBlock |= ((block >> 50) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 50) & oneULL);
+	pBlock |= ((block >> 10) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 10) & oneULL);
+	pBlock |= ((block >> 42) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 42) & oneULL);
+	pBlock |= ((block >> 2) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 2) & oneULL);
+	pBlock |= ((block >> 34) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 34) & oneULL);
+	pBlock |= ((block >> 27) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 27) & oneULL);
+	pBlock |= ((block >> 59) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 59) & oneULL);
+	pBlock |= ((block >> 19) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 19) & oneULL);
+	pBlock |= ((block >> 51) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 51) & oneULL);
+	pBlock |= ((block >> 11) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 11) & oneULL);
+	pBlock |= ((block >> 43) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 43) & oneULL);
+	pBlock |= ((block >> 3) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 3) & oneULL);
+	pBlock |= ((block >> 35) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 35) & oneULL);
+	pBlock |= ((block >> 28) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 28) & oneULL);
+	pBlock |= ((block >> 60) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 60) & oneULL);
+	pBlock |= ((block >> 20) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 20) & oneULL);
+	pBlock |= ((block >> 52) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 52) & oneULL);
+	pBlock |= ((block >> 12) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 12) & oneULL);
+	pBlock |= ((block >> 44) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 44) & oneULL);
+	pBlock |= ((block >> 4) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 4) & oneULL);
+	pBlock |= ((block >> 36) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 36) & oneULL);
+	pBlock |= ((block >> 29) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 29) & oneULL);
+	pBlock |= ((block >> 61) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 61) & oneULL);
+	pBlock |= ((block >> 21) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 21) & oneULL);
+	pBlock |= ((block >> 53) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 53) & oneULL);
+	pBlock |= ((block >> 13) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 13) & oneULL);
+	pBlock |= ((block >> 45) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 45) & oneULL);
+	pBlock |= ((block >> 5) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 5) & oneULL);
+	pBlock |= ((block >> 37) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 37) & oneULL);
+	pBlock |= ((block >> 30) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 30) & oneULL);
+	pBlock |= ((block >> 62) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 62) & oneULL);
+	pBlock |= ((block >> 22) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 22) & oneULL);
+	pBlock |= ((block >> 54) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 54) & oneULL);
+	pBlock |= ((block >> 14) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 14) & oneULL);
+	pBlock |= ((block >> 46) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 46) & oneULL);
+	pBlock |= ((block >> 6) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 6) & oneULL);
+	pBlock |= ((block >> 38) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 38) & oneULL);
+	pBlock |= ((block >> 31) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 31) & oneULL);
+	pBlock |= ((block >> 63) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 63) & oneULL);
+	pBlock |= ((block >> 23) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 23) & oneULL);
+	pBlock |= ((block >> 55) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 55) & oneULL);
+	pBlock |= ((block >> 15) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 15) & oneULL);
+	pBlock |= ((block >> 47) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 47) & oneULL);
+	pBlock |= ((block >> 7) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 7) & oneULL);
-	pBlock <<= 1;
-	pBlock |= ((block >> 39) & oneULL);
+	pBlock |= ((block >> 39) & 0x1);
+
+	cout << hex << endl;
+	cout << pBlock << endl;
 	return pBlock;
 };
 
@@ -172,140 +169,215 @@ ull sp(ull right) {
 	2	8	24	14	32	27	3	9
 	19	13	30	6	22	11	4	25
 	*/
-	ul pRight = 0;
+	ull pRight = 0;
+	pRight |= ((right >> 16) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 16) & oneUL);
+	pRight |= ((right >> 25) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 25) & oneUL);
+	pRight |= ((right >> 12) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 12) & oneUL);
+	pRight |= ((right >> 11) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 11) & oneUL);
+	pRight |= ((right >> 3) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 3) & oneUL);
+	pRight |= ((right >> 20) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 20) & oneUL);
+	pRight |= ((right >> 4) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 4) & oneUL);
+	pRight |= ((right >> 15) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 15) & oneUL);
+	pRight |= ((right >> 31) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 31) & oneUL);
+	pRight |= ((right >> 17) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 17) & oneUL);
+	pRight |= ((right >> 9) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 9) & oneUL);
+	pRight |= ((right >> 6) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 6) & oneUL);
+	pRight |= ((right >> 27) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 27) & oneUL);
+	pRight |= ((right >> 14) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 14) & oneUL);
+	pRight |= ((right >> 1) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 1) & oneUL);
+	pRight |= ((right >> 22) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 22) & oneUL);
+	pRight |= ((right >> 30) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 30) & oneUL);
+	pRight |= ((right >> 24) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 24) & oneUL);
+	pRight |= ((right >> 8) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 8) & oneUL);
+	pRight |= ((right >> 18) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 18) & oneUL);
+	pRight |= (right & 0x1);
 	pRight <<= 1;
-	pRight |= (right & oneUL);
+	pRight |= ((right >> 5) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 5) & oneUL);
+	pRight |= ((right >> 29) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 29) & oneUL);
+	pRight |= ((right >> 23) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 23) & oneUL);
+	pRight |= ((right >> 13) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 13) & oneUL);
+	pRight |= ((right >> 19) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 19) & oneUL);
+	pRight |= ((right >> 2) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 2) & oneUL);
+	pRight |= ((right >> 26) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 26) & oneUL);
+	pRight |= ((right >> 10) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 10) & oneUL);
+	pRight |= ((right >> 21) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 21) & oneUL);
+	pRight |= ((right >> 28) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 28) & oneUL);
-	pRight <<= 1;
-	pRight |= ((right >> 7) & oneUL);
+	pRight |= ((right >> 7) & 0x1);
+
+	cout << hex << endl;
+	cout << pRight << endl;
 	return pRight;
 };
 
 //Eight 6x4 Substitution Boxes to take 48-bits into 32-bits - ARM
-ull sb(ul right) {
-	ul sRight = 0;
-	/* S-Box 1
-		14	4	13	1	2	15	11	8	3	10	6	12	5	9	0	7
-		0	15	7	4	14	2	13	1	10	6	12	11	9	5	3	8
-		4	1	14	8	13	6	2	11	15	12	9	7	3	10	5	0
-		15	12	8	2	4	9	1	7	5	11	3	14	10	0	6	13
-	*/
+ull sb(ull right) {
+	/*	The 48-bits coming in are split into 8 groups of 6-bits each.
+		Each group of 6-bits is passed to its respective substitution box.
+		The substitution boxes are 64 character arrays comprised of
+		4 rows and 16 columns. In each group, the first and last bit are used
+		to determine which row to select (0-3) and the middle four bits determine
+		which column to select (0-15). The intersection of row and column then selects
+		a respective 4-bit output. After this process is completed for each of the 
+		eight groups, the outputs are joined together to form a 32-bit output.
+
+		Grab row and column bits (rccccr) by ANDing with 100001 and 011110
+		to determine which are turned on
+		Shift each over to determine the lookup value
+		Or and set result with value determined from S-Box
+		(subsequent rounds, shift result left 4-bits to set desired location).
+	*/	
+	ull sRight = 0;
+	ull row, column;
+
+	// S-Box 1
+	char sb1[64] = {
+		14,	4,	13,	1,	2,	15,	11,	8,	3,	10,	6,	12,	5,	9,	0,	7,
+		0,	15,	7,	4,	14,	2,	13,	1,	10,	6,	12,	11,	9,	5,	3,	8,
+		4,	1,	14,	8,	13,	6,	2,	11,	15,	12,	9,	7,	3,	10,	5,	0,
+		15,	12,	8,	2,	4,	9,	1,	7,	5,	11,	3,	14,	10,	0,	6,	13
+	};
+
+	row = (right & 0x840000000000) >> 42;
+	row = (row >> 4) | (row & 0x1);
+	column = (right & 0x780000000000) >> 43;
+	sRight |= (sb1[16*row+column] & 0xF);
+
+	// S-Box 2
+	char sb2[64] = {
+		15,	1,	8,	14,	6,	11,	3,	4,	9,	7,	2,	13,	12,	0,	5,	10,
+		3,	13,	4,	7,	15,	2,	8,	14,	12,	0,	1,	10,	6,	9,	11,	5,
+		0,	14,	7,	11,	10,	4,	13,	1,	5,	8,	12,	6,	9,	3,	2,	15,
+		13,	8,	10,	1,	3,	15,	4,	2,	11,	6,	7,	12,	0,	5,	14,	9
+	};
+
+	row = (right & 0x21000000000) >> 36;
+	row = (row >> 4) | (row & 0x1);
+	column = (right & 0x1E000000000) >> 37;
 	sRight <<= 4;
-	sRight |=
+	sRight |= (sb2[16 * row + column] & 0xF);
 
-	/* S-Box 2
-		15	1	8	14	6	11	3	4	9	7	2	13	12	0	5	10
-		3	13	4	7	15	2	8	14	12	0	1	10	6	9	11	5
-		0	14	7	11	10	4	13	1	5	8	12	6	9	3	2	15
-		13	8	10	1	3	15	4	2	11	6	7	12	0	5	14	9
-	*/
+	// S-Box 3
+	char sb3[64] = {
+		10,	0,	9,	14,	6,	3,	15,	5,	1,	13,	12,	7,	11,	4,	2,	8,
+		13,	7,	0,	9,	3,	4,	6,	10,	2,	8,	5,	14,	12,	11,	15,	1,
+		13,	6,	4,	9,	8,	15,	3,	0,	11,	1,	2,	12,	5,	10,	14,	7,
+		1,	10,	13,	0,	6,	9,	8,	7,	4,	15,	14,	3,	11,	5,	2,	12
+	};
 
-	/* S-Box 3
-		10	0	9	14	6	3	15	5	1	13	12	7	11	4	2	8
-		13	7	0	9	3	4	6	10	2	8	5	14	12	11	15	1
-		13	6	4	9	8	15	3	0	11	1	2	12	5	10	14	7
-		1	10	13	0	6	9	8	7	4	15	14	3	11	5	2	12
-	*/
+	row = (right & 0x840000000) >> 30;
+	row = (row >> 4) | (row & 0x1);
+	column = (right & 0x780000000) >> 31;
+	sRight <<= 4;
+	sRight |= (sb3[16 * row + column] & 0xF);
 
-	/* S-Box 4
-		7	13	14	3	0	6	9	10	1	2	8	5	11	12	4	15
-		13	8	11	5	6	15	0	3	4	7	2	12	1	10	14	9
-		10	6	9	0	12	11	7	13	15	1	3	14	5	2	8	4
-		3	15	0	6	10	1	13	8	9	4	5	11	12	7	2	14
-	*/
+	// S-Box 4
+	char sb4[64] = {
+		7,	13,	14,	3,	0,	6,	9,	10,	1,	2,	8,	5,	11,	12,	4,	15,
+		13,	8,	11,	5,	6,	15,	0,	3,	4,	7,	2,	12,	1,	10,	14,	9,
+		10,	6,	9,	0,	12,	11,	7,	13,	15,	1,	3,	14,	5,	2,	8,	4,
+		3,	15,	0,	6,	10,	1,	13,	8,	9,	4,	5,	11,	12,	7,	2,	14
+	};
 
-	/* S-Box 5
-		2	12	4	1	7	10	11	6	8	5	3	15	13	0	14	9
-		14	11	2	12	4	7	13	1	5	0	15	10	3	9	8	6
-		4	2	1	11	10	13	7	8	15	9	12	5	6	3	0	14
-		11	8	12	7	1	14	2	13	6	15	0	9	10	4	5	3
-	*/
+	row = (right & 0x21000000) >> 24;
+	row = (row >> 4) | (row & 0x1);
+	column = (right & 0x1E000000) >> 25;
+	sRight <<= 4;
+	sRight |= (sb4[16 * row + column] & 0xF);
 
-	/* S-Box 6
-		12	1	10	15	9	2	6	8	0	13	3	4	14	7	5	11
-		10	15	4	2	7	12	9	5	6	1	13	14	0	11	3	8
-		9	14	15	5	2	8	12	3	7	0	4	10	1	13	11	6
-		4	3	2	12	9	5	15	10	11	14	1	7	6	0	8	13
-	*/
+	// S-Box 5
+	char sb5[64] = {
+		2,	12,	4,	1,	7,	10,	11,	6,	8,	5,	3,	15,	13,	0,	14,	9,
+		14,	11,	2,	12,	4,	7,	13,	1,	5,	0,	15,	10,	3,	9,	8,	6,
+		4,	2,	1,	11,	10,	13,	7,	8,	15,	9,	12,	5,	6,	3,	0,	14,
+		11,	8,	12,	7,	1,	14,	2,	13,	6,	15,	0,	9,	10,	4,	5,	3
+	};
 
-	/* S-Box 7
-		4	11	2	14	15	0	8	13	3	12	9	7	5	10	6	1
-		13	0	11	7	4	9	1	10	14	3	5	12	2	15	8	6
-		1	4	11	13	12	3	7	14	10	15	6	8	0	5	9	2
-		6	11	13	8	1	4	10	7	9	5	0	15	14	2	3	12
-	*/
+	row = (right & 0x840000) >> 18;
+	row = (row >> 4) | (row & 0x1);
+	column = (right & 0x780000) >> 19;
+	sRight <<= 4;
+	sRight |= (sb5[16 * row + column] & 0xF);
 
-	/* S-Box 8
-		13	2	8	4	6	15	11	1	10	9	3	14	5	0	12	7
-		1	15	13	8	10	3	7	4	12	5	6	11	0	14	9	2
-		7	11	4	1	9	12	14	2	0	6	10	13	15	3	5	8
-		2	1	14	7	4	10	8	13	15	12	9	0	3	5	6	11
-	*/
+	// S-Box 6
+	char sb6[64] = {
+		12,	1,	10,	15,	9,	2,	6,	8,	0,	13,	3,	4,	14,	7,	5,	11,
+		10,	15,	4,	2,	7,	12,	9,	5,	6,	1,	13,	14,	0,	11,	3,	8,
+		9,	14,	15,	5,	2,	8,	12,	3,	7,	0,	4,	10,	1,	13,	11,	6,
+		4,	3,	2,	12,	9,	5,	15,	10,	11,	14,	1,	7,	6,	0,	8,	13
+	};
+
+	row = (right & 0x21000) >> 12;
+	row = (row >> 4) | (row & 0x1);
+	column = (right & 0x1E000) >> 13;
+	sRight <<= 4;
+	sRight |= (sb6[16 * row + column] & 0xF);
+
+	// S-Box 7
+	char sb7[64] = {
+		4,	11,	2,	14,	15,	0,	8,	13,	3,	12,	9,	7,	5,	10,	6,	1,
+		13,	0,	11,	7,	4,	9,	1,	10,	14,	3,	5,	12,	2,	15,	8,	6,
+		1,	4,	11,	13,	12,	3,	7,	14,	10,	15,	6,	8,	0,	5,	9,	2,
+		6,	11,	13,	8,	1,	4,	10,	7,	9,	5,	0,	15,	14,	2,	3,	12
+	};
+
+	row = (right & 0x840) >> 6;
+	row = (row >> 4) | (row & 0x1);
+	column = (right & 0x780) >> 7;
+	sRight <<= 4;
+	sRight |= (sb7[16 * row + column] & 0xF);
+
+	// S-Box 8
+	char sb8[64] = {
+		13,	2,	8,	4,	6,	15,	11,	1,	10,	9,	3,	14,	5,	0,	12,	7,
+		1,	15,	13,	8,	10,	3,	7,	4,	12,	5,	6,	11,	0,	14,	9,	2,
+		7,	11,	4,	1,	9,	12,	14,	2,	0,	6,	10,	13,	15,	3,	5,	8,
+		2,	1,	14,	7,	4,	10,	8,	13,	15,	12,	9,	0,	3,	5,	6,	11
+	};
+
+	row = (right & 0x21);
+	row = (row >> 4) | (row & 0x1);
+	column = (right & 0x1E) >> 1;
+	sRight <<= 4;
+	sRight |= (sb8[16 * row + column] & 0xF);
+
+	cout << hex << endl;
+	cout << sRight << endl;
 
 	return sRight;
 };
 
 //Expansion Permutation Box to go from 32-bit half of input to 48-bits to be XORed with key - ARM
-ull ep(ul right) {
+ull ep(ull right) {
 	/*	More permutation using expansion P-box 
 		with the following table (subtracted from 32):
 	32	1	2	3	4	5
@@ -317,110 +389,111 @@ ull ep(ul right) {
 	24	25	26	27	28	29
 	28	29	30	31	32	1
 	*/
-	ul pRight = 0;
+	ull pRight = 0;
+	pRight |= (right & 0x1);
 	pRight <<= 1;
-	pRight |= (right & oneUL);
+	pRight |= ((right >> 31) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 31) & oneUL);
+	pRight |= ((right >> 30) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 30) & oneUL);
+	pRight |= ((right >> 29) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 29) & oneUL);
+	pRight |= ((right >> 28) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 28) & oneUL);
+	pRight |= ((right >> 27) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 27) & oneUL);
+	pRight |= ((right >> 28) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 28) & oneUL);
+	pRight |= ((right >> 27) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 27) & oneUL);
+	pRight |= ((right >> 26) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 26) & oneUL);
+	pRight |= ((right >> 25) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 25) & oneUL);
+	pRight |= ((right >> 24) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 24) & oneUL);
+	pRight |= ((right >> 23) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 23) & oneUL);
+	pRight |= ((right >> 24) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 24) & oneUL);
+	pRight |= ((right >> 23) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 23) & oneUL);
+	pRight |= ((right >> 22) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 22) & oneUL);
+	pRight |= ((right >> 21) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 21) & oneUL);
+	pRight |= ((right >> 20) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 20) & oneUL);
+	pRight |= ((right >> 19) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 19) & oneUL);
+	pRight |= ((right >> 20) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 20) & oneUL);
+	pRight |= ((right >> 19) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 19) & oneUL);
+	pRight |= ((right >> 18) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 18) & oneUL);
+	pRight |= ((right >> 17) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 17) & oneUL);
+	pRight |= ((right >> 16) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 16) & oneUL);
+	pRight |= ((right >> 15) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 15) & oneUL);
+	pRight |= ((right >> 16) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 16) & oneUL);
+	pRight |= ((right >> 15) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 15) & oneUL);
+	pRight |= ((right >> 14) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 14) & oneUL);
+	pRight |= ((right >> 13) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 13) & oneUL);
+	pRight |= ((right >> 12) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 12) & oneUL);
+	pRight |= ((right >> 11) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 11) & oneUL);
+	pRight |= ((right >> 12) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 12) & oneUL);
+	pRight |= ((right >> 11) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 11) & oneUL);
+	pRight |= ((right >> 10) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 10) & oneUL);
+	pRight |= ((right >> 9) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 9) & oneUL);
+	pRight |= ((right >> 8) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 8) & oneUL);
+	pRight |= ((right >> 7) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 7) & oneUL);
+	pRight |= ((right >> 8) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 8) & oneUL);
+	pRight |= ((right >> 7) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 7) & oneUL);
+	pRight |= ((right >> 6) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 6) & oneUL);
+	pRight |= ((right >> 5) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 5) & oneUL);
+	pRight |= ((right >> 4) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 4) & oneUL);
+	pRight |= ((right >> 3) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 3) & oneUL);
+	pRight |= ((right >> 4) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 4) & oneUL);
+	pRight |= ((right >> 3) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 3) & oneUL);
+	pRight |= ((right >> 2) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 2) & oneUL);
+	pRight |= ((right >> 1) & 0x1);
 	pRight <<= 1;
-	pRight |= ((right >> 1) & oneUL);
+	pRight |= (right & 0x1);
 	pRight <<= 1;
-	pRight |= (right & oneUL);
-	pRight <<= 1;
-	pRight |= ((right >> 31) & oneUL);
+	pRight |= ((right >> 31) & 0x1);
+	cout << hex << endl;
+	cout << pRight << endl;
 	return pRight;
 };
 
 //Initial Permutation of 64-bit plaintext block - ARM
 ull ip(ull block) {
 	/*	More Permutation, this time just a straight
-		P-Box using the following table (subtracted from 64):
+		P-Box using the following table (values subtracted from 64 for shift):
 		58	50	42	34	26	18	10	2
 		60	52	44	36	28	20	12	4
 		62	54	46	38	30	22	14	6
@@ -431,134 +504,135 @@ ull ip(ull block) {
 		63	55	47	39	31	23	15	7
 	*/
 	ull pBlock = 0;
+	pBlock |= ((block >> 6) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 6) & oneULL);
+	pBlock |= ((block >> 14) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 14) & oneULL);
+	pBlock |= ((block >> 22) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 22) & oneULL);
+	pBlock |= ((block >> 30) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 30) & oneULL);
+	pBlock |= ((block >> 38) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 38) & oneULL);
+	pBlock |= ((block >> 46) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 46) & oneULL);
+	pBlock |= ((block >> 54) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 54) & oneULL);
+	pBlock |= ((block >> 62) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 62) & oneULL);
+	pBlock |= ((block >> 4) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 4) & oneULL);
+	pBlock |= ((block >> 12) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 12) & oneULL);
+	pBlock |= ((block >> 20) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 20) & oneULL);
+	pBlock |= ((block >> 28) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 28) & oneULL);
+	pBlock |= ((block >> 36) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 36) & oneULL);
+	pBlock |= ((block >> 44) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 44) & oneULL);
+	pBlock |= ((block >> 52) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 52) & oneULL);
+	pBlock |= ((block >> 60) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 60) & oneULL);
+	pBlock |= ((block >> 2) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 2) & oneULL);
+	pBlock |= ((block >> 10) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 10) & oneULL);
+	pBlock |= ((block >> 18) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 18) & oneULL);
+	pBlock |= ((block >> 26) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 26) & oneULL);
+	pBlock |= ((block >> 34) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 34) & oneULL);
+	pBlock |= ((block >> 42) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 42) & oneULL);
+	pBlock |= ((block >> 50) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 50) & oneULL);
+	pBlock |= ((block >> 58) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 58) & oneULL);
+	pBlock |= (block & 0x1);
 	pBlock <<= 1;
-	pBlock |= (block & oneULL);
+	pBlock |= ((block >> 8) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 8) & oneULL);
+	pBlock |= ((block >> 16) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 16) & oneULL);
+	pBlock |= ((block >> 24) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 24) & oneULL);
+	pBlock |= ((block >> 32) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 32) & oneULL);
+	pBlock |= ((block >> 40) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 40) & oneULL);
+	pBlock |= ((block >> 48) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 48) & oneULL);
+	pBlock |= ((block >> 56) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 56) & oneULL);
+	pBlock |= ((block >> 7) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 7) & oneULL);
+	pBlock |= ((block >> 15) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 15) & oneULL);
+	pBlock |= ((block >> 23) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 23) & oneULL);
+	pBlock |= ((block >> 31) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 31) & oneULL);
+	pBlock |= ((block >> 39) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 39) & oneULL);
+	pBlock |= ((block >> 47) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 47) & oneULL);
+	pBlock |= ((block >> 55) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 55) & oneULL);
+	pBlock |= ((block >> 63) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 63) & oneULL);
+	pBlock |= ((block >> 5) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 5) & oneULL);
+	pBlock |= ((block >> 13) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 13) & oneULL);
+	pBlock |= ((block >> 21) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 21) & oneULL);
+	pBlock |= ((block >> 29) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 29) & oneULL);
+	pBlock |= ((block >> 37) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 37) & oneULL);
+	pBlock |= ((block >> 45) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 45) & oneULL);
+	pBlock |= ((block >> 53) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 53) & oneULL);
+	pBlock |= ((block >> 61) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 61) & oneULL);
+	pBlock |= ((block >> 3) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 3) & oneULL);
+	pBlock |= ((block >> 11) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 11) & oneULL);
+	pBlock |= ((block >> 19) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 19) & oneULL);
+	pBlock |= ((block >> 27) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 27) & oneULL);
+	pBlock |= ((block >> 35) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 35) & oneULL);
+	pBlock |= ((block >> 43) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 43) & oneULL);
+	pBlock |= ((block >> 51) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 51) & oneULL);
+	pBlock |= ((block >> 59) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 59) & oneULL);
+	pBlock |= ((block >> 1) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 1) & oneULL);
+	pBlock |= ((block >> 9) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 9) & oneULL);
+	pBlock |= ((block >> 17) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 17) & oneULL);
+	pBlock |= ((block >> 25) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 25) & oneULL);
+	pBlock |= ((block >> 33) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 33) & oneULL);
+	pBlock |= ((block >> 41) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 41) & oneULL);
+	pBlock |= ((block >> 49) & 0x1);
 	pBlock <<= 1;
-	pBlock |= ((block >> 49) & oneULL);
-	pBlock <<= 1;
-	pBlock |= ((block >> 57) & oneULL);
+	pBlock |= ((block >> 57) & 0x1);
+	cout << hex << endl;
+	cout << pBlock << endl;
 	return pBlock;
 };
 
@@ -577,102 +651,101 @@ void pc2(ull key, int round) {
 	46	42	50	36	29	32
 	*/
 	roundkey[round] = 0;
+	roundkey[round] |= ((key >> 42) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 42) & oneULL);
+	roundkey[round] |= ((key >> 39) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 39) & oneULL);
+	roundkey[round] |= ((key >> 45) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 45) & oneULL);
+	roundkey[round] |= ((key >> 32) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 32) & oneULL);
+	roundkey[round] |= ((key >> 55) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 55) & oneULL);
+	roundkey[round] |= ((key >> 51) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 51) & oneULL);
+	roundkey[round] |= ((key >> 53) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 53) & oneULL);
+	roundkey[round] |= ((key >> 28) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 28) & oneULL);
+	roundkey[round] |= ((key >> 41) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 41) & oneULL);
+	roundkey[round] |= ((key >> 50) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 50) & oneULL);
+	roundkey[round] |= ((key >> 35) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 35) & oneULL);
+	roundkey[round] |= ((key >> 46) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 46) & oneULL);
+	roundkey[round] |= ((key >> 33) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 33) & oneULL);
+	roundkey[round] |= ((key >> 37) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 37) & oneULL);
+	roundkey[round] |= ((key >> 44) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 44) & oneULL);
+	roundkey[round] |= ((key >> 52) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 52) & oneULL);
+	roundkey[round] |= ((key >> 30) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 30) & oneULL);
+	roundkey[round] |= ((key >> 48) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 48) & oneULL);
+	roundkey[round] |= ((key >> 40) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 40) & oneULL);
+	roundkey[round] |= ((key >> 49) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 49) & oneULL);
+	roundkey[round] |= ((key >> 29) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 29) & oneULL);
+	roundkey[round] |= ((key >> 36) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 36) & oneULL);
+	roundkey[round] |= ((key >> 43) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 43) & oneULL);
+	roundkey[round] |= ((key >> 54) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 54) & oneULL);
+	roundkey[round] |= ((key >> 15) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 15) & oneULL);
+	roundkey[round] |= ((key >> 4) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 4) & oneULL);
+	roundkey[round] |= ((key >> 25) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 25) & oneULL);
+	roundkey[round] |= ((key >> 19) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 19) & oneULL);
+	roundkey[round] |= ((key >> 9) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 9) & oneULL);
+	roundkey[round] |= ((key >> 1) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 1) & oneULL);
+	roundkey[round] |= ((key >> 26) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 26) & oneULL);
+	roundkey[round] |= ((key >> 16) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 16) & oneULL);
+	roundkey[round] |= ((key >> 5) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 5) & oneULL);
+	roundkey[round] |= ((key >> 11) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 11) & oneULL);
+	roundkey[round] |= ((key >> 23) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 23) & oneULL);
+	roundkey[round] |= ((key >> 8) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 8) & oneULL);
+	roundkey[round] |= ((key >> 12) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 12) & oneULL);
+	roundkey[round] |= ((key >> 7) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 7) & oneULL);
+	roundkey[round] |= ((key >> 17) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 17) & oneULL);
+	roundkey[round] |= (key & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= (key & oneULL);
+	roundkey[round] |= ((key >> 22) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 22) & oneULL);
+	roundkey[round] |= ((key >> 3) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 3) & oneULL);
+	roundkey[round] |= ((key >> 10) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 10) & oneULL);
+	roundkey[round] |= ((key >> 14) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 14) & oneULL);
+	roundkey[round] |= ((key >> 6) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 6) & oneULL);
+	roundkey[round] |= ((key >> 20) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 20) & oneULL);
+	roundkey[round] |= ((key >> 27) & 0x1);
 	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 27) & oneULL);
-	roundkey[round] <<= 1;
-	roundkey[round] |= ((key >> 24) & oneULL);
+	roundkey[round] |= ((key >> 24) & 0x1);
 };
 
 //Compression Permutation Box to go from 64-bit key to 56-bit key - ARM
@@ -694,118 +767,117 @@ ull pc1(ull key) {
 	different and correctly turn that bit on.
 	*/
 	ull pKey = 0;
+	pKey |= ((key >> 7) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 7) & oneULL);
+	pKey |= ((key >> 15) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 15) & oneULL);
+	pKey |= ((key >> 23) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 23) & oneULL);
+	pKey |= ((key >> 31) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 31) & oneULL);
+	pKey |= ((key >> 39) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 39) & oneULL);
+	pKey |= ((key >> 47) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 47) & oneULL);
+	pKey |= ((key >> 55) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 55) & oneULL);
+	pKey |= ((key >> 63) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 63) & oneULL);
+	pKey |= ((key >> 6) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 6) & oneULL);
+	pKey |= ((key >> 14) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 14) & oneULL);
+	pKey |= ((key >> 22) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 22) & oneULL);
+	pKey |= ((key >> 30) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 30) & oneULL);
+	pKey |= ((key >> 38) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 38) & oneULL);
+	pKey |= ((key >> 46) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 46) & oneULL);
+	pKey |= ((key >> 54) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 54) & oneULL);
+	pKey |= ((key >> 62) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 62) & oneULL);
+	pKey |= ((key >> 5) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 5) & oneULL);
+	pKey |= ((key >> 13) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 13) & oneULL);
+	pKey |= ((key >> 21) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 21) & oneULL);
+	pKey |= ((key >> 29) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 29) & oneULL);
+	pKey |= ((key >> 37) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 37) & oneULL);
+	pKey |= ((key >> 45) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 45) & oneULL);
+	pKey |= ((key >> 53) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 53) & oneULL);
+	pKey |= ((key >> 61) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 61) & oneULL);
+	pKey |= ((key >> 4) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 4) & oneULL);
+	pKey |= ((key >> 12) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 12) & oneULL);
+	pKey |= ((key >> 20) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 20) & oneULL);
+	pKey |= ((key >> 28) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 28) & oneULL);
+	pKey |= ((key >> 1) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 1) & oneULL);
+	pKey |= ((key >> 9) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 9) & oneULL);
+	pKey |= ((key >> 17) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 17) & oneULL);
+	pKey |= ((key >> 25) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 25) & oneULL);
+	pKey |= ((key >> 33) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 33) & oneULL);
+	pKey |= ((key >> 41) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 41) & oneULL);
+	pKey |= ((key >> 49) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 49) & oneULL);
+	pKey |= ((key >> 57) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 57) & oneULL);
+	pKey |= ((key >> 2) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 2) & oneULL);
+	pKey |= ((key >> 10) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 10) & oneULL);
+	pKey |= ((key >> 18) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 18) & oneULL);
+	pKey |= ((key >> 26) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 26) & oneULL);
+	pKey |= ((key >> 34) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 34) & oneULL);
+	pKey |= ((key >> 42) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 42) & oneULL);
+	pKey |= ((key >> 50) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 50) & oneULL);
+	pKey |= ((key >> 58) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 58) & oneULL);
+	pKey |= ((key >> 3) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 3) & oneULL);
+	pKey |= ((key >> 11) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 11) & oneULL);
+	pKey |= ((key >> 19) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 19) & oneULL);
+	pKey |= ((key >> 27) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 27) & oneULL);
+	pKey |= ((key >> 35) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 35) & oneULL);
+	pKey |= ((key >> 43) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 43) & oneULL);
+	pKey |= ((key >> 51) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 51) & oneULL);
+	pKey |= ((key >> 59) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 59) & oneULL);
+	pKey |= ((key >> 36) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 36) & oneULL);
+	pKey |= ((key >> 44) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 44) & oneULL);
+	pKey |= ((key >> 52) & 0x1);
 	pKey <<= 1;
-	pKey |= ((key >> 52) & oneULL);
-	pKey <<= 1;
-	pKey |= ((key >> 60) & oneULL);
+	pKey |= ((key >> 60) & 0x1);
 	return pKey;
 };
 
@@ -819,116 +891,113 @@ void keygen(ull key) {
 	1, 1, 2, 2, 2, 2, 2, 2, 1,  2,  2,  2,  2,  2,  2,  1
 	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
 	*/
-	ul C = (ul)((key >> 28) & right28f);
-	ul D = (ul)(key & right28f);
+	ull C = (ull)((key >> 28) & 0xfffffff);
+	ull D = (ull)(key & 0xfffffff);
 
 	//iteration 1
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2((((ull)C) << 28) | ((ull)D), 0);
 
 	//iteration 2
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2((((ull)C) << 28) | ((ull)D), 1);
 
 	//iteration 3
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2((((ull)C) << 28) | ((ull)D), 2);
 
 	//iteration 4
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2((((ull)C) << 28) | ((ull)D), 3);
 
 	//iteration 5
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2((((ull)C) << 28) | ((ull)D), 4);
 
 	//iteration 6
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2((((ull)C) << 28) | ((ull)D), 5);
 
 	//iteration 7
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2((((ull)C) << 28) | ((ull)D), 6);
 
 	//iteration 8
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2((((ull)C) << 28) | ((ull)D), 7);
 
 	//iteration 9
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2((((ull)C) << 28) | ((ull)D), 8);
 
 	//iteration 10
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2((((ull)C) << 28) | ((ull)D), 9);
 
 	//iteration 11
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2((((ull)C) << 28) | ((ull)D), 10);
 
 	//iteration 12
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2((((ull)C) << 28) | ((ull)D), 11);
 
 	//iteration 13
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2((((ull)C) << 28) | ((ull)D), 12);
 
 	//iteration 14
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2((((ull)C) << 28) | ((ull)D), 13);
 
 	//iteration 15
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2((((ull)C) << 28) | ((ull)D), 14);
 
 	//iteration 16
-	C = (right28f & (C << 1)) | (oneUL & (C >> 27));
-	D = (right28f & (D << 1)) | (oneUL & (D >> 27));
+	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
+	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2((((ull)C) << 28) | ((ull)D), 15);
 
-	for (int i = 0; i < 16; i++) {
-		cout << roundkey[i] << endl;
-	}
 }
 
 //Organizes the steps for encryption - ARM
@@ -945,11 +1014,11 @@ ull des(ull block, ull key, string actionType) {
 		leftOut and rightOut are joined back together to form 64-bit output
 		Output passed through final permutation before returning to be saved in the outFile
 	*/
-	ul leftIn, rightIn, rightOut, leftOut;
+	ull leftIn, rightIn, rightOut, leftOut;
 	keygen(key);
 	block = ip(block);
-	leftIn = (ul)((block >> 32) & right32f);
-	rightIn = (ul)(block & right32f);
+	leftIn = (ull)((block >> 32) & 0xffffffff);
+	rightIn = (ull)(block & 0xffffffff);
 	leftOut = rightIn;
 	for (int i = 0; i <= 15; i++) {
 		//Direction keys are applied is determined by actionType passed in
@@ -1015,6 +1084,8 @@ bool validAction(string action) {
 	}
 }
 
+//Creates 
+
 //Converts a string to all uppercase characters - ARM
 string upCase(string str) {
 	transform(str.begin(), str.end(), str.begin(), toupper);
@@ -1035,7 +1106,7 @@ int main(int argc, char* argv[]){
 	ofstream outFile;
 	bool validEntry = false;
 
-
+	
 	if (argc != 6){
 		cout << "Incorrect number of arguments supplied." << endl;
 		prompt();
@@ -1076,9 +1147,18 @@ int main(int argc, char* argv[]){
 		prompt();
 		return 1;
 	}
-
-	hKey = 1383827165325090801;
-	keygen(hKey);
+	ull p = 81985529216486895;
+	ull k = 1383827165325090801;
+	ull c = 0;
+	c = des(p, k, "E");
+	cout << c << endl;
+	c = des(c, k, "D");
+	cout << c << endl;
+	cout << p << endl;
+	cout << "do" << endl;
+	//sb(106754541511975);
+	//hKey = 1383827165325090801;
+	//keygen(hKey);
 	/* FIX - Needs to determine filesize so it knows how to handle 
 		and pad if last block is less than 64 bits.
 
@@ -1089,15 +1169,17 @@ int main(int argc, char* argv[]){
 		cout << size << endl;
 		inFile.seekg(0, inFile.beg);
 		cout << hex << endl;
+		
 		for (ull buffer; inFile.read(reinterpret_cast<char*>(&buffer), sizeof buffer);) {
-			if (inFile.gcount() < 64) {
+			if (inFile.gcount() < 8) {
 				cout << inFile.gcount() << endl;
 			}
-			cout << setw(sizeof buffer * CHAR_BIT) << buffer << endl;
+			//des(buffer, hKey, action);
+			cout << inFile.gcount() << endl;
+			cout << sizeof buffer * CHAR_BIT << buffer << endl;
 		}
 
-		des(block, hKey, action);
-	*/
+		*/
 	return 0;
 }
 

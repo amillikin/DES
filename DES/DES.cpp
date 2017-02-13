@@ -155,8 +155,6 @@ ull fp(ull block) {
 	pBlock <<= 1;
 	pBlock |= ((block >> 39) & 0x1);
 
-	cout << hex << endl;
-	cout << pBlock << endl;
 	return pBlock;
 };
 
@@ -234,8 +232,6 @@ ull sp(ull right) {
 	pRight <<= 1;
 	pRight |= ((right >> 7) & 0x1);
 
-	cout << hex << endl;
-	cout << pRight << endl;
 	return pRight;
 };
 
@@ -370,9 +366,6 @@ ull sb(ull right) {
 	sRight <<= 4;
 	sRight |= (sb8[16 * row + column] & 0xF);
 
-	cout << hex << endl;
-	cout << sRight << endl;
-
 	return sRight;
 };
 
@@ -485,8 +478,6 @@ ull ep(ull right) {
 	pRight |= (right & 0x1);
 	pRight <<= 1;
 	pRight |= ((right >> 31) & 0x1);
-	cout << hex << endl;
-	cout << pRight << endl;
 	return pRight;
 };
 
@@ -631,8 +622,6 @@ ull ip(ull block) {
 	pBlock |= ((block >> 49) & 0x1);
 	pBlock <<= 1;
 	pBlock |= ((block >> 57) & 0x1);
-	cout << hex << endl;
-	cout << pBlock << endl;
 	return pBlock;
 };
 
@@ -1014,30 +1003,33 @@ ull des(ull block, ull key, string actionType) {
 		leftOut and rightOut are joined back together to form 64-bit output
 		Output passed through final permutation before returning to be saved in the outFile
 	*/
-	ull leftIn, rightIn, rightOut, leftOut;
 	keygen(key);
+	ull left, right, tempR;
 	block = ip(block);
-	leftIn = (ull)((block >> 32) & 0xffffffff);
-	rightIn = (ull)(block & 0xffffffff);
-	leftOut = rightIn;
+	left = ((block >> 32) & 0xffffffff);
+	right = (block & 0xffffffff);
 	for (int i = 0; i <= 15; i++) {
 		//Direction keys are applied is determined by actionType passed in
 		if (actionType == "E") {
-			rightIn = ep(rightIn);
-			rightIn ^ roundkey[i];
-			rightIn = sb(rightIn);
-			rightIn = sp(rightIn);
-			rightOut = rightIn ^ leftIn;
+			tempR = right;
+			right = ep(right);
+			right ^= roundkey[i];
+			right = sb(right);
+			right = sp(right);
+			right = right ^ left;
+			left = tempR;
 		}
 		else if (actionType == "D") {
-			rightIn = ep(rightIn);
-			rightIn ^ roundkey[15-i];
-			rightIn = sb(rightIn);
-			rightIn = sp(rightIn);
-			rightOut = rightIn ^ leftIn;
+			tempR = right;
+			right = ep(right);
+			right ^= roundkey[15-i];
+			right = sb(right);
+			right = sp(right);
+			right = right ^ left;
+			left = tempR;
 		}
 	}
-	block = ((ull)right << 32) | ((ull)left);
+	block = ((right << 32) | left);
 	block = fp(block);
 	return block;
 }
@@ -1084,7 +1076,7 @@ bool validAction(string action) {
 	}
 }
 
-//Creates 
+//Creates Random Pad
 
 //Converts a string to all uppercase characters - ARM
 string upCase(string str) {
@@ -1147,8 +1139,13 @@ int main(int argc, char* argv[]){
 		prompt();
 		return 1;
 	}
+
 	ull p = 81985529216486895;
 	ull k = 1383827165325090801;
+	//ull s = 106754541511975;
+	//ull sp = 1552070039;
+	//ull fp = 742207273711055412;
+	
 	ull c = 0;
 	c = des(p, k, "E");
 	cout << c << endl;
@@ -1156,7 +1153,7 @@ int main(int argc, char* argv[]){
 	cout << c << endl;
 	cout << p << endl;
 	cout << "do" << endl;
-	//sb(106754541511975);
+
 	//hKey = 1383827165325090801;
 	//keygen(hKey);
 	/* FIX - Needs to determine filesize so it knows how to handle 

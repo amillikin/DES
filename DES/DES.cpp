@@ -1019,10 +1019,8 @@ ull des(ull block, string actionType) {
 		leftOut and rightOut are joined back together to form 64-bit output
 		Output passed through final permutation before returning to be saved in the outFile
 	*/
-	cout << hex << block << endl;
 	ull left, right, tempR;
 	block = ip(block);
-	cout << hex << block << endl;
 	left = ((block >> 32) & 0xffffffff);
 	right = (block & 0xffffffff);
 	for (int i = 0; i <= 15; i++) {
@@ -1047,13 +1045,11 @@ ull des(ull block, string actionType) {
 		}
 	}
 	block = ((right << 32) | left);
-	cout << hex << block << endl;
 	block = fp(block);
-	cout << hex << block << endl;
 	return block;
 }
 
-//Checks valid mode - ARM
+//Checks valid mode - ARM 
 bool validMode(string mode) {
 	if (mode == "ECB" || mode == "CBC") {
 		return true;

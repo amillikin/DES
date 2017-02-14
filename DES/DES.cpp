@@ -1200,8 +1200,7 @@ int main(int argc, char* argv[]){
 		// Read file while successfully reading eight 1-byte items, pass through DES, write to outFile.
 		while(fread_s(reinterpret_cast<char*>(&block), 8, 1, 8, inStream) == 8){
 			block = des(block, hKey, action);
-			if (action == "D" && (ftell(inStream) == size)) {
-				//block <<= bytesLeft;
+			if (action == "D" && (ftell(inStream) == size )) {
 				block >>= bytesLeft;
 			};
 			fwrite(reinterpret_cast<char*>(&block), 8, 1, outStream);

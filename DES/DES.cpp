@@ -258,11 +258,11 @@ ull sb(ull right) {
 		a respective 4-bit output. After this process is completed for each of the 
 		eight groups, the outputs are joined together to form a 32-bit output.
 
-		Grab row and column bits (rccccr) by ANDing with 100001 and 011110
-		to determine which are turned on
-		Shift each over to determine the lookup value
-		Or and set result with value determined from S-Box
-		(subsequent rounds, shift result left 4-bits to set desired location).
+		Grab desired row and column bits (rccccr) from input (right)
+		by ANDing with 100001 and 011110 to determine which are turned on.
+		Shift this result (row/col) over to determine the lookup value
+		Or and set result (sRight) with value determined from S-Box
+		(subsequent rounds, shift result (sRight) left 4-bits to set desired location for new bits).
 	*/	
 	ull sRight = 0;
 	ull row, column;
@@ -385,14 +385,14 @@ ull sb(ull right) {
 ull ep(ull right) {
 	/*	More permutation using expansion P-box 
 		with the following table (subtracted from 32):
-	32	1	2	3	4	5
-	4	5	6	7	8	9
-	8	9	10	11	12	13
+	32	 1	 2	 3	 4	 5
+	 4	 5	 6	 7	 8	 9
+	 8	 9	10	11	12	13
 	12	13	14	15	16	17
 	16	17	18	19	20	21
 	20	21	22	23	24	25
 	24	25	26	27	28	29
-	28	29	30	31	32	1
+	28	29	30	31	32	 1
 	*/
 	ull pRight = 0;
 	pRight |= (right & 0x1);
@@ -501,7 +501,7 @@ ull ip(ull block) {
 		60	52	44	36	28	20	12	4
 		62	54	46	38	30	22	14	6
 		64	56	48	40	32	24	16	8
-		57	49	41	33	25	17	9	1
+		57	49	41	33	25	17	 9	1
 		59	51	43	35	27	19	11	3
 		61	53	45	37	29	21	13	5
 		63	55	47	39	31	23	15	7
@@ -762,10 +762,11 @@ ull pc1(ull key) {
 	7	62	54	46	38	30	22
 	14	6	61	53	45	37	29
 	21	13	5	28	20	12	4
-	The shift puts the correct value in place to be ANDed with 1.
-	If the key value is also 1, this will evaluate the right side to 1
-	and since pKey is initialized to 0, the XOR will see the values are
-	different and correctly turn that bit on.
+	The shift places the correct bit from the input key
+	(determined by the table) into the LSB. 
+	AND 0x1 shuts off all bits except this bit.
+	OR= takes the current pKey and appends this bit.
+	This action is repeated until we have our new 56-bit key.
 	*/
 	ull pKey = 0;
 	pKey |= ((key >> 7) & 0x1);
@@ -888,9 +889,13 @@ void keygen(ull key) {
 	key = pc1(key);
 
 	/*	Split key into left and right halves to be shifted left using the following number
-	of shifts on a given iteration for 16 iterations:
-	1, 1, 2, 2, 2, 2, 2, 2, 1,  2,  2,  2,  2,  2,  2,  1
-	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
+		of shifts on a given iteration for 16 iterations:
+			1, 1, 2, 2, 2, 2, 2, 2, 1,  2,  2,  2,  2,  2,  2,  1
+			1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
+		Bitwise shift does not rotate, so in order to pick back up 
+		the the bit shifted off, we need to OR that bit into the LSB.
+		Each iteration sends C and D off to PC-2 which creates 
+		that round's 48-bit key and saves it to a global roundKey array.
 	*/
 	ull C = (ull)((key >> 28) & 0xfffffff);
 	ull D = (ull)(key & 0xfffffff);
@@ -898,113 +903,112 @@ void keygen(ull key) {
 	//iteration 1
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
-	pc2((((ull)C) << 28) | ((ull)D), 0);
+	pc2(((C << 28) | D), 0);
 
 	//iteration 2
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
-	pc2((((ull)C) << 28) | ((ull)D), 1);
+	pc2(((C << 28) | D), 1);
 
 	//iteration 3
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
-	pc2((((ull)C) << 28) | ((ull)D), 2);
+	pc2(((C << 28) | D), 2);
 
 	//iteration 4
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
-	pc2((((ull)C) << 28) | ((ull)D), 3);
+	pc2(((C << 28) | D), 3);
 
 	//iteration 5
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
-	pc2((((ull)C) << 28) | ((ull)D), 4);
+	pc2(((C << 28) | D), 4);
 
 	//iteration 6
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
-	pc2((((ull)C) << 28) | ((ull)D), 5);
+	pc2(((C << 28) | D), 5);
 
 	//iteration 7
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
-	pc2((((ull)C) << 28) | ((ull)D), 6);
+	pc2(((C << 28) | D), 6);
 
 	//iteration 8
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
-	pc2((((ull)C) << 28) | ((ull)D), 7);
+	pc2(((C << 28) | D), 7);
 
 	//iteration 9
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
-	pc2((((ull)C) << 28) | ((ull)D), 8);
+	pc2(((C << 28) | D), 8);
 
 	//iteration 10
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
-	pc2((((ull)C) << 28) | ((ull)D), 9);
+	pc2(((C << 28) | D), 9);
 
 	//iteration 11
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
-	pc2((((ull)C) << 28) | ((ull)D), 10);
+	pc2(((C << 28) | D), 10);
 
 	//iteration 12
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
-	pc2((((ull)C) << 28) | ((ull)D), 11);
+	pc2(((C << 28) | D), 11);
 
 	//iteration 13
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
-	pc2((((ull)C) << 28) | ((ull)D), 12);
+	pc2(((C << 28) | D), 12);
 
 	//iteration 14
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
-	pc2((((ull)C) << 28) | ((ull)D), 13);
+	pc2(((C << 28) | D), 13);
 
 	//iteration 15
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
-	pc2((((ull)C) << 28) | ((ull)D), 14);
+	pc2(((C << 28) | D), 14);
 
 	//iteration 16
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
-	pc2((((ull)C) << 28) | ((ull)D), 15);
+	pc2(((C << 28) | D), 15);
 
 }
 
 //Organizes the steps for encryption - ARM
-ull des(ull block, ull key, string actionType) {
-	/*	Passes key to keygen to generate the 16 round keys
-		Passes block through initial permutation
+ull des(ull block, string actionType) {
+	/*	Passes block through initial permutation
 		Splits block into 32-bit leftIn and rightIn halves
 		leftOut set to rightIn
 		rightIn passed through expansion permutation
@@ -1015,9 +1019,10 @@ ull des(ull block, ull key, string actionType) {
 		leftOut and rightOut are joined back together to form 64-bit output
 		Output passed through final permutation before returning to be saved in the outFile
 	*/
-	keygen(key);
+	cout << hex << block << endl;
 	ull left, right, tempR;
 	block = ip(block);
+	cout << hex << block << endl;
 	left = ((block >> 32) & 0xffffffff);
 	right = (block & 0xffffffff);
 	for (int i = 0; i <= 15; i++) {
@@ -1042,7 +1047,9 @@ ull des(ull block, ull key, string actionType) {
 		}
 	}
 	block = ((right << 32) | left);
+	cout << hex << block << endl;
 	block = fp(block);
+	cout << hex << block << endl;
 	return block;
 }
 
@@ -1088,15 +1095,25 @@ bool validAction(string action) {
 	}
 }
 
+//Creates necessary hex bytes to and with buffer that should contain less than 8 bytes
+ull getHexfBytes(size_t bytesLeft) {
+	ull hexBytes = 0;
+	for (size_t i = 0;  i < bytesLeft; i++) {
+		hexBytes <<= 8;
+		hexBytes |= 0xff;
+	}
+	return hexBytes;
+}
+
 //Creates Random Pad Bits
-ull getRandBits(int numToPad) {
-	ull randBits = 0;
+ull getRandBytes(int numToPad) {
+	ull randBytes = 0;
 	srand(time(NULL));
-	for (int i = 0; i <= numToPad; i++) {
-		randBits <<= 1;
-		randBits |= (rand() & 1);
+	for (int i = 0; i < numToPad; i++) {
+		randBytes <<= 8;
+		randBytes |= (rand() % 255);
 	};
-	return randBits;
+	return randBytes;
 }
 
 //Converts a string to all uppercase characters - ARM
@@ -1114,8 +1131,8 @@ void prompt()
 int main(int argc, char* argv[]){
 	string action, mode, key;
 	streampos begF, endF;
-	ull hKey, readPos, block;
-	size_t bytesLeft, readBytes, size, bytesReturned;
+	ull hKey, block;
+	size_t bytesLeft, size, shiftAmt, writeSize;
 	errno_t err;
 
 
@@ -1171,46 +1188,61 @@ int main(int argc, char* argv[]){
 			prompt();
 			return 1;
 		}
-	/*	When encrypting, need to encrypt filesize left padded with 32 random bits.
+	/*	Initialize block to 0, writeSize to 8, and generate round keys with hKey.
+		When encrypting, need to encrypt filesize left padded with 32 random bits.
 		When decrypting, need to check filesize by running first block through DES and
-		keeping only the right half by ANDing with 0xffffffff. Take inStream filesize and 
+		keeping only the right half by ANDing with 0xffffffff. Take inStream filesize 
+		subtract 8 bytes (that were added from the filesize on encryption), then
 		subtract the newly decrypted filesize to determine any excess bytes.
-		Doing a byte shift to the right by this excess will give 
+		This value will be the number of random bytes padded on, so subtracting this number
+		from 8-bytes will give the number of padded bytes (8-padded bytes will be what we want to keep)
 	*/
+		block = 0;
+		writeSize = 8;
+		keygen(hKey);
 		if (action == "E") {
 			block = size;
-			block = ((getRandBits(32) << 32) | size);
-			block = des(block, hKey, action);
-			fwrite(reinterpret_cast<char*>(&block), 1, 8, outStream);
+			block = ((getRandBytes(32) << 32) | size);
+			block = des(block, action);
+			fwrite(reinterpret_cast<char*>(&block), 8, 1, outStream);
 			bytesLeft = (size % 8);
 		}
 		else {
 			fread_s(reinterpret_cast<char*>(&block), 8, 1, 8, inStream);
-			block = des(block, hKey, action);
-			bytesLeft = (size - 8) - (block & 0xffffffff);
+			block = des(block, action);
+			bytesLeft = ((size - 8) - (block & 0xffffffff));
 		};
 
+
 		// If filesize is less than 8 bytes, only read that amount, padding appropriately before passing through DES.
+		// Guaranteed to be encrpytion if this is true because an encrypted file being decrypted would have at least 9 bytes.
 		if (size < 8) {
 			fread_s(reinterpret_cast<char*>(&block), bytesLeft, 1, bytesLeft, inStream);
-			block = ((block << bytesLeft) | (getRandBits(8 - bytesLeft)));
-			block = des(block, hKey, action);
+			block = (((block & getHexfBytes(bytesLeft)) << (8 - bytesLeft)) | (getRandBytes(8 - bytesLeft)));
+			block = des(block, action);
 		}
 
 		// Read file while successfully reading eight 1-byte items, pass through DES, write to outFile.
 		while(fread_s(reinterpret_cast<char*>(&block), 8, 1, 8, inStream) == 8){
-			block = des(block, hKey, action);
+			block = des(block, action);
 			if (action == "D" && (ftell(inStream) == size )) {
-				block >>= bytesLeft;
+				shiftAmt = (bytesLeft * 8);
+				block >>= shiftAmt;
+				writeSize = (8-bytesLeft);
 			};
-			fwrite(reinterpret_cast<char*>(&block), 8, 1, outStream);
+			fwrite(reinterpret_cast<char*>(&block), writeSize, 1, outStream);
+			cout << hex << block << endl;
+			block = 0;
 		};
 
 		// Catch any bytes left over, push them left the appropriate amount, pad with random bytes.
 		if ((bytesLeft > 0) && (action == "E")) {
-			block = ((block << bytesLeft) | (getRandBits(8 - bytesLeft)));
-			block = des(block, hKey, action);
-			fwrite(reinterpret_cast<char*>(&block), 8, 1, outStream);
+			block &= getHexfBytes(bytesLeft);
+			shiftAmt = ((8 - bytesLeft) * 8);
+			block <<= shiftAmt;
+			block |= getRandBytes(8 - bytesLeft);
+			block = des(block, action);
+			fwrite(reinterpret_cast<char*>(&block), writeSize, 1, outStream);
 		}
 
 		fclose(inStream);

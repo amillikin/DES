@@ -1117,7 +1117,7 @@ int main(int argc, char* argv[]){
 	ull hKey, readPos, block;
 	size_t bytesLeft, readBytes, size, bytesReturned;
 	errno_t err;
-
+	cout << time(NULL) << endl;
 
 	
 	if (argc != 6){
@@ -1216,7 +1216,7 @@ int main(int argc, char* argv[]){
 
 		fclose(inStream);
 		fclose(outStream);
-
+		cout << time(NULL) << endl;
 	return 0;
 }
 

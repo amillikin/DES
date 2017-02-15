@@ -42,70 +42,70 @@ ull fp(ull block) {
 		33	1	41	9	49	17	57	25
 	*/
 	ull pBlock = 0;
-	if (block & 0x8000000000) pBlock |= 1;		//	40	8	48	16	56	24	64	32
-	if (block & 0x80) pBlock |= (1 << 1);
-	if (block & 0x800000000000) pBlock |= (1 << 2);
-	if (block & 0x8000) pBlock |= (1 << 3);
-	if (block & 0x80000000000000) pBlock |= (1 << 4);
-	if (block & 0x800000) pBlock |= (1 << 5);
-	if (block & 0x8000000000000000) pBlock |= (1 << 6);
-	if (block & 0x80000000) pBlock |= (1 << 7);
-	if (block & 0x4000000000) pBlock |= (1 << 8);		//	39	7	47	15	55	23	63	31
-	if (block & 0x40) pBlock |= (1 << 9);
-	if (block & 0x400000000000) pBlock |= (1 << 10);
-	if (block & 0x4000) pBlock |= (1 << 11);
-	if (block & 0x40000000000000) pBlock |= (1 << 12);
-	if (block & 0x400000) pBlock |= (1 << 13);
-	if (block & 0x4000000000000000) pBlock |= (1 << 14);
-	if (block & 0x40000000) pBlock |= (1 << 15);
-	if (block & 0x2000000000) pBlock |= (1 << 16);		// 38	6	46	14	54	22	62	30
-	if (block & 0x20) pBlock |= (1 << 17);
-	if (block & 0x200000000000) pBlock |= (1 << 18);
-	if (block & 0x2000) pBlock |= (1 << 19);
-	if (block & 0x20000000000000) pBlock |= (1 << 20);
-	if (block & 0x200000) pBlock |= (1 << 21);
-	if (block & 0x2000000000000000) pBlock |= (1 << 22);
-	if (block & 0x20000000) pBlock |= (1 << 23);
-	if (block & 0x1000000000) pBlock |= (1 << 24);		// 37	5	45	13	53	21	61	29
-	if (block & 0x10) pBlock |= (1 << 25);
-	if (block & 0x100000000000) pBlock |= (1 << 26);
-	if (block & 0x1000) pBlock |= (1 << 27);
-	if (block & 0x10000000000000) pBlock |= (1 << 28);
-	if (block & 0x100000) pBlock |= (1 << 29);
-	if (block & 0x1000000000000000) pBlock |= (1 << 30);
-	if (block & 0x10000000) pBlock |= (1 << 31);
-	if (block & 0x800000000) pBlock |= (1 << 32);		//	36	4	44	12	52	20	60	28
-	if (block & 0x8) pBlock |= (1 << 33);
-	if (block & 0x80000000000) pBlock |= (1 << 34);
-	if (block & 0x800) pBlock |= (1 << 35);
-	if (block & 0x8000000000000) pBlock |= (1 << 36);
-	if (block & 0x80000) pBlock |= (1 << 37);
-	if (block & 0x800000000000000) pBlock |= (1 << 38);
-	if (block & 0x8000000) pBlock |= (1 << 39);
-	if (block & 0x400000000) pBlock |= (1 << 40);		//	35	3	43	11	51	19	59	27
-	if (block & 0x4) pBlock |= (1 << 41);
-	if (block & 0x40000000000) pBlock |= (1 << 42);
-	if (block & 0x400) pBlock |= (1 << 43);
-	if (block & 0x4000000000000) pBlock |= (1 << 44);
-	if (block & 0x40000) pBlock |= (1 << 45);
-	if (block & 0x400000000000000) pBlock |= (1 << 46);
-	if (block & 0x4000000) pBlock |= (1 << 47);
-	if (block & 0x200000000) pBlock |= (1 << 48);		// 34	2	42	10	50	18	58	26
-	if (block & 0x20) pBlock |= (1 << 49);
-	if (block & 0x20000000000) pBlock |= (1 << 50);
-	if (block & 0x200) pBlock |= (1 << 51);
-	if (block & 0x2000000000000) pBlock |= (1 << 52);
-	if (block & 0x20000) pBlock |= (1 << 53);
-	if (block & 0x200000000000000) pBlock |= (1 << 57);
-	if (block & 0x2000000) pBlock |= (1 << 55);
-	if (block & 0x100000000) pBlock |= (1 << 56);		// 33	1	41	9	49	17	57	25
-	if (block & 0x1) pBlock |= (1 << 57);
-	if (block & 0x10000000000) pBlock |= (1 << 58);
-	if (block & 0x100) pBlock |= (1 << 59);
-	if (block & 0x1000000000000) pBlock |= (1 << 60);
-	if (block & 0x10000) pBlock |= (1 << 61);
-	if (block & 0x100000000000000) pBlock |= (1 << 62);
-	if (block & 0x1000000) pBlock |= (1 << 63);
+	if (block & 0x8000000000) pBlock |= (ull)1;					//	40	8	48	16	56	24	64	32
+	if (block & 0x80) pBlock |= ((ull)1 << 1);
+	if (block & 0x800000000000) pBlock |= ((ull)1 << 2);
+	if (block & 0x8000) pBlock |= ((ull)1 << 3);
+	if (block & 0x80000000000000) pBlock |= ((ull)1 << 4);
+	if (block & 0x800000) pBlock |= ((ull)1 << 5);
+	if (block & 0x8000000000000000) pBlock |= ((ull)1 << 6);
+	if (block & 0x80000000) pBlock |= ((ull)1 << 7);
+	if (block & 0x4000000000) pBlock |= ((ull)1 << 8);			//	39	7	47	15	55	23	63	31
+	if (block & 0x40) pBlock |= ((ull)1 << 9);
+	if (block & 0x400000000000) pBlock |= ((ull)1 << 10);
+	if (block & 0x4000) pBlock |= ((ull)1 << 11);
+	if (block & 0x40000000000000) pBlock |= ((ull)1 << 12);
+	if (block & 0x400000) pBlock |= ((ull)1 << 13);
+	if (block & 0x4000000000000000) pBlock |= ((ull)1 << 14);
+	if (block & 0x40000000) pBlock |= ((ull)1 << 15);
+	if (block & 0x2000000000) pBlock |= ((ull)1 << 16);			// 38	6	46	14	54	22	62	30
+	if (block & 0x20) pBlock |= ((ull)1 << 17);
+	if (block & 0x200000000000) pBlock |= ((ull)1 << 18);
+	if (block & 0x2000) pBlock |= ((ull)1 << 19);
+	if (block & 0x20000000000000) pBlock |= ((ull)1 << 20);
+	if (block & 0x200000) pBlock |= ((ull)1 << 21);
+	if (block & 0x2000000000000000) pBlock |= ((ull)1 << 22);
+	if (block & 0x20000000) pBlock |= ((ull)1 << 23);
+	if (block & 0x1000000000) pBlock |= ((ull)1 << 24);			// 37	5	45	13	53	21	61	29
+	if (block & 0x10) pBlock |= ((ull)1 << 25);
+	if (block & 0x100000000000) pBlock |= ((ull)1 << 26);
+	if (block & 0x1000) pBlock |= ((ull)1 << 27);
+	if (block & 0x10000000000000) pBlock |= ((ull)1 << 28);
+	if (block & 0x100000) pBlock |= ((ull)1 << 29);
+	if (block & 0x1000000000000000) pBlock |= ((ull)1 << 30);
+	if (block & 0x10000000) pBlock |= ((ull)1 << 31);
+	if (block & 0x800000000) pBlock |= ((ull)1 << 32);		//	36	4	44	12	52	20	60	28
+	if (block & 0x8) pBlock |= ((ull)1 << 33);
+	if (block & 0x80000000000) pBlock |= ((ull)1 << 34);
+	if (block & 0x800) pBlock |= ((ull)1 << 35);
+	if (block & 0x8000000000000) pBlock |= ((ull)1 << 36);
+	if (block & 0x80000) pBlock |= ((ull)1 << 37);
+	if (block & 0x800000000000000) pBlock |= ((ull)1 << 38);
+	if (block & 0x8000000) pBlock |= ((ull)1 << 39);
+	if (block & 0x400000000) pBlock |= ((ull)1 << 40);		//	35	3	43	11	51	19	59	27
+	if (block & 0x4) pBlock |= ((ull)1 << 41);
+	if (block & 0x40000000000) pBlock |= ((ull)1 << 42);
+	if (block & 0x400) pBlock |= ((ull)1 << 43);
+	if (block & 0x4000000000000) pBlock |= ((ull)1 << 44);
+	if (block & 0x40000) pBlock |= ((ull)1 << 45);
+	if (block & 0x400000000000000) pBlock |= ((ull)1 << 46);
+	if (block & 0x4000000) pBlock |= ((ull)1 << 47);
+	if (block & 0x200000000) pBlock |= ((ull)1 << 48);		// 34	2	42	10	50	18	58	26
+	if (block & 0x20) pBlock |= ((ull)1 << 49);
+	if (block & 0x20000000000) pBlock |= ((ull)1 << 50);
+	if (block & 0x200) pBlock |= ((ull)1 << 51);
+	if (block & 0x2000000000000) pBlock |= ((ull)1 << 52);
+	if (block & 0x20000) pBlock |= ((ull)1 << 53);
+	if (block & 0x200000000000000) pBlock |= ((ull)1 << 57);
+	if (block & 0x2000000) pBlock |= ((ull)1 << 55);
+	if (block & 0x100000000) pBlock |= ((ull)1 << 56);		// 33	1	41	9	49	17	57	25
+	if (block & 0x1) pBlock |= ((ull)1 << 57);
+	if (block & 0x10000000000) pBlock |= ((ull)1 << 58);
+	if (block & 0x100) pBlock |= ((ull)1 << 59);
+	if (block & 0x1000000000000) pBlock |= ((ull)1 << 60);
+	if (block & 0x10000) pBlock |= ((ull)1 << 61);
+	if (block & 0x100000000000000) pBlock |= ((ull)1 << 62);
+	if (block & 0x1000000) pBlock |= ((ull)1 << 63);
 	return pBlock;
 };
 
@@ -122,38 +122,38 @@ ull sp(ull right) {
 			19	13	30	6	22	11	4	25
 	*/
 	ull pRight = 0;
-	if (right & 0x8000) pRight |= 1;			//	16	7	20	21	29	12	28	17
-	if (right & 0x40) pRight |= (1 << 1);
-	if (right & 0x80000) pRight |= (1 << 2);
-	if (right & 0x100000) pRight |= (1 << 3);
-	if (right & 0x10000000) pRight |= (1 << 4);
-	if (right & 0x800) pRight |= (1 << 5);
-	if (right & 0x8000000) pRight |= (1 << 6);
-	if (right & 0x10000) pRight |= (1 << 7);
-	if (right & 0x1) pRight |= (1 << 8);		//	1	15	23	26	5	18	31	10
-	if (right & 0x4000) pRight |= (1 << 9);
-	if (right & 0x400000) pRight |= (1 << 10);
-	if (right & 0x2000000) pRight |= (1 << 11);
-	if (right & 0x10) pRight |= (1 << 12);
-	if (right & 0x20000) pRight |= (1 << 13);
-	if (right & 0x40000000) pRight |= (1 << 14);
-	if (right & 0x200) pRight |= (1 << 15);
-	if (right & 0x2) pRight |= (1 << 16);		//	2	8	24	14	32	27	3	9
-	if (right & 0x80) pRight |= (1 << 17);
-	if (right & 0x800000) pRight |= (1 << 18);
-	if (right & 0x2000) pRight |= (1 << 19);
-	if (right & 0x80000000) pRight |= (1 << 20);
-	if (right & 0x4000000) pRight |= (1 << 21);
-	if (right & 0x4) pRight |= (1 << 22);
-	if (right & 0x100) pRight |= (1 << 23);
-	if (right & 0x40000) pRight |= (1 << 24);	//	19	13	30	6	22	11	4	25
-	if (right & 0x1000) pRight |= (1 << 25);
-	if (right & 0x20000000) pRight |= (1 << 26);
-	if (right & 0x20) pRight |= (1 << 27);
-	if (right & 0x200000) pRight |= (1 << 28);
-	if (right & 0x400) pRight |= (1 << 29);
-	if (right & 0x8) pRight |= (1 << 30);
-	if (right & 0x1000000) pRight |= (1 << 31);
+	if (right & 0x8000) pRight |= (ull)1;			//	16	7	20	21	29	12	28	17
+	if (right & 0x40) pRight |= ((ull)1 << 1);
+	if (right & 0x80000) pRight |= ((ull)1 << 2);
+	if (right & 0x100000) pRight |= ((ull)1 << 3);
+	if (right & 0x10000000) pRight |= ((ull)1 << 4);
+	if (right & 0x800) pRight |= ((ull)1 << 5);
+	if (right & 0x8000000) pRight |= ((ull)1 << 6);
+	if (right & 0x10000) pRight |= ((ull)1 << 7);
+	if (right & 0x1) pRight |= ((ull)1 << 8);		//	1	15	23	26	5	18	31	10
+	if (right & 0x4000) pRight |= ((ull)1 << 9);
+	if (right & 0x400000) pRight |= ((ull)1 << 10);
+	if (right & 0x2000000) pRight |= ((ull)1 << 11);
+	if (right & 0x10) pRight |= ((ull)1 << 12);
+	if (right & 0x20000) pRight |= ((ull)1 << 13);
+	if (right & 0x40000000) pRight |= ((ull)1 << 14);
+	if (right & 0x200) pRight |= ((ull)1 << 15);
+	if (right & 0x2) pRight |= ((ull)1 << 16);		//	2	8	24	14	32	27	3	9
+	if (right & 0x80) pRight |= ((ull)1 << 17);
+	if (right & 0x800000) pRight |= ((ull)1 << 18);
+	if (right & 0x2000) pRight |= ((ull)1 << 19);
+	if (right & 0x80000000) pRight |= ((ull)1 << 20);
+	if (right & 0x4000000) pRight |= ((ull)1 << 21);
+	if (right & 0x4) pRight |= ((ull)1 << 22);
+	if (right & 0x100) pRight |= ((ull)1 << 23);
+	if (right & 0x40000) pRight |= ((ull)1 << 24);	//	19	13	30	6	22	11	4	25
+	if (right & 0x1000) pRight |= ((ull)1 << 25);
+	if (right & 0x20000000) pRight |= ((ull)1 << 26);
+	if (right & 0x20) pRight |= ((ull)1 << 27);
+	if (right & 0x200000) pRight |= ((ull)1 << 28);
+	if (right & 0x400) pRight |= ((ull)1 << 29);
+	if (right & 0x8) pRight |= ((ull)1 << 30);
+	if (right & 0x1000000) pRight |= ((ull)1 << 31);
 	return pRight;
 };
 
@@ -308,84 +308,84 @@ ull ep(ull right) {
 			28	29	30	31	32	 1
 	*/
 	ull pRight = 0;
-	if (right & 0x80000000) pRight |= 1;
+	if (right & 0x80000000) pRight |= (ull)1;
 	if (right & 0x1) {
-		pRight |= (1 << 1);
-		pRight |= (1 << 47);
+		pRight |= ((ull)1 << 1);
+		pRight |= ((ull)1 << 47);
 	}
-	if (right & 0x2) pRight |= (1 << 2);
-	if (right & 0x4) pRight |= (1 << 3);
+	if (right & 0x2) pRight |= ((ull)1 << 2);
+	if (right & 0x4) pRight |= ((ull)1 << 3);
 	if (right & 0x8) {
-		pRight |= (1 << 4);
-		pRight |= (1 << 6);
+		pRight |= ((ull)1 << 4);
+		pRight |= ((ull)1 << 6);
 	}
 	if (right & 0x10) {
-		pRight |= (1 << 5);
-		pRight |= (1 << 7);
+		pRight |= ((ull)1 << 5);
+		pRight |= ((ull)1 << 7);
 	}
-	if (right & 0x20) pRight |= (1 << 8);
-	if (right & 0x40) pRight |= (1 << 9);
+	if (right & 0x20) pRight |= ((ull)1 << 8);
+	if (right & 0x40) pRight |= ((ull)1 << 9);
 	if (right & 0x80) {
-		pRight |= (1 << 10);
-		pRight |= (1 << 12);
+		pRight |= ((ull)1 << 10);
+		pRight |= ((ull)1 << 12);
 	}
 	if (right & 0x100) {
-		pRight |= (1 << 11);
-		pRight |= (1 << 13);
+		pRight |= ((ull)1 << 11);
+		pRight |= ((ull)1 << 13);
 	}
-	if (right & 0x200) pRight |= (1 << 14);
+	if (right & 0x200) pRight |= ((ull)1 << 14);
 	if (right & 0x400) {
-		pRight |= (1 << 15);
-		pRight |= (1 << 17);
+		pRight |= ((ull)1 << 15);
+		pRight |= ((ull)1 << 17);
 	}
 	if (right & 0x800) {
-		pRight |= (1 << 16);
-		pRight |= (1 << 18);
+		pRight |= ((ull)1 << 16);
+		pRight |= ((ull)1 << 18);
 	}
-	if (right & 0x1000) pRight |= (1 << 19);
-	if (right & 0x2000) pRight |= (1 << 20);
-	if (right & 0x4000) pRight |= (1 << 21);
+	if (right & 0x1000) pRight |= ((ull)1 << 19);
+	if (right & 0x2000) pRight |= ((ull)1 << 20);
+	if (right & 0x4000) pRight |= ((ull)1 << 21);
 	if (right & 0x8000) {
-		pRight |= (1 << 22);
-		pRight |= (1 << 24);
+		pRight |= ((ull)1 << 22);
+		pRight |= ((ull)1 << 24);
 	}
 	if (right & 0x10000) {
-		pRight |= (1 << 23);
-		pRight |= (1 << 25);
+		pRight |= ((ull)1 << 23);
+		pRight |= ((ull)1 << 25);
 	}
-	if (right & 0x20000) pRight |= (1 << 26);
-	if (right & 0x40000) pRight |= (1 << 27);
+	if (right & 0x20000) pRight |= ((ull)1 << 26);
+	if (right & 0x40000) pRight |= ((ull)1 << 27);
 	if (right & 0x80000) {
-		pRight |= (1 << 28);
-		pRight |= (1 << 30);
+		pRight |= ((ull)1 << 28);
+		pRight |= ((ull)1 << 30);
 	}
 	if (right & 0x100000) {
-		pRight |= (1 << 29);
-		pRight |= (1 << 31);
+		pRight |= ((ull)1 << 29);
+		pRight |= ((ull)1 << 31);
 	}
-	if (right & 0x200000) pRight |= (1 << 32);
-	if (right & 0x400000) pRight |= (1 << 33);
+	if (right & 0x200000) pRight |= ((ull)1 << 32);
+	if (right & 0x400000) pRight |= ((ull)1 << 33);
 	if (right & 0x800000) {
-		pRight |= (1 << 34);
-		pRight |= (1 << 36);
+		pRight |= ((ull)1 << 34);
+		pRight |= ((ull)1 << 36);
 	}
 	if (right & 0x1000000) {
-		pRight |= (1 << 35);
-		pRight |= (1 << 37);
+		pRight |= ((ull)1 << 35);
+		pRight |= ((ull)1 << 37);
 	}
-	if (right & 0x2000000) pRight |= (1 << 38);
-	if (right & 0x4000000) pRight |= (1 << 39);
+	if (right & 0x2000000) pRight |= ((ull)1 << 38);
+	if (right & 0x4000000) pRight |= ((ull)1 << 39);
 	if (right & 0x8000000) {
-		pRight |= (1 << 40);
-		pRight |= (1 << 42);
+		pRight |= ((ull)1 << 40);
+		pRight |= ((ull)1 << 42);
 	}
 	if (right & 0x10000000) {
-		pRight |= (1 << 41);
-		pRight |= (1 << 43);
+		pRight |= ((ull)1 << 41);
+		pRight |= ((ull)1 << 43);
 	}
-	if (right & 0x20000000) pRight |= (1 << 44);
-	if (right & 0x40000000) pRight |= (1 << 45);
-	if (right & 0x80000000) pRight |= (1 << 46);
+	if (right & 0x20000000) pRight |= ((ull)1 << 44);
+	if (right & 0x40000000) pRight |= ((ull)1 << 45);
+	if (right & 0x80000000) pRight |= ((ull)1 << 46);
 	return pRight;
 };
 
@@ -406,70 +406,70 @@ ull ip(ull block) {
 		63	55	47	39	31	23	15	7
 	*/
 	ull pBlock = 0;
-	if (block & 0x200000000000000) pBlock |= 1; //	58	50	42	34	26	18	10	2
-	if (block & 0x2000000000000) pBlock |= (1 << 1);
-	if (block & 0x20000000000) pBlock |= (1 << 2);
-	if (block & 0x200000000) pBlock |= (1 << 3);
-	if (block & 0x2000000) pBlock |= (1 << 4);
-	if (block & 0x20000) pBlock |= (1 << 5);
-	if (block & 0x200) pBlock |= (1 << 6);
-	if (block & 0x2) pBlock |= (1 << 7);
-	if (block & 0x800000000000000) pBlock |= (1 << 8); //	60	52	44	36	28	20	12	4
-	if (block & 0x8000000000000) pBlock |= (1 << 9);
-	if (block & 0x80000000000) pBlock |= (1 << 10);
-	if (block & 0x800000000) pBlock |= (1 << 11);
-	if (block & 0x8000000) pBlock |= (1 << 12);
-	if (block & 0x80000) pBlock |= (1 << 13);
-	if (block & 0x800) pBlock |= (1 << 14);
-	if (block & 0x8) pBlock |= (1 << 15);
-	if (block & 0x2000000000000000) pBlock |= (1 << 16); // 62	54	46	38	30	22	14	6
-	if (block & 0x20000000000000) pBlock |= (1 << 17);
-	if (block & 0x200000000000) pBlock |= (1 << 18);
-	if (block & 0x2000000000) pBlock |= (1 << 19);
-	if (block & 0x20000000) pBlock |= (1 << 20);
-	if (block & 0x200000) pBlock |= (1 << 21);
-	if (block & 0x2000) pBlock |= (1 << 22);
-	if (block & 0x20) pBlock |= (1 << 23);
-	if (block & 0x8000000000000000) pBlock |= (1 << 24); // 64	56	48	40	32	24	16	8
-	if (block & 0x80000000000000) pBlock |= (1 << 25);
-	if (block & 0x800000000000) pBlock |= (1 << 26);
-	if (block & 0x8000000000) pBlock |= (1 << 27);
-	if (block & 0x80000000) pBlock |= (1 << 28);
-	if (block & 0x800000) pBlock |= (1 << 29);
-	if (block & 0x8000) pBlock |= (1 << 30);
-	if (block & 0x80) pBlock |= (1 << 31);
-	if (block & 0x100000000000000) pBlock |= (1 << 32); //	57	49	41	33	25	17	 9	1
-	if (block & 0x1000000000000) pBlock |= (1 << 33);
-	if (block & 0x10000000000) pBlock |= (1 << 34);
-	if (block & 0x100000000) pBlock |= (1 << 35);
-	if (block & 0x1000000) pBlock |= (1 << 36);
-	if (block & 0x10000) pBlock |= (1 << 37);
-	if (block & 0x100) pBlock |= (1 << 38);
-	if (block & 0x1) pBlock |= (1 << 39);
-	if (block & 0x400000000000000) pBlock |= (1 << 40); //	59	51	43	35	27	19	11	3
-	if (block & 0x4000000000000) pBlock |= (1 << 41);
-	if (block & 0x40000000000) pBlock |= (1 << 42);
-	if (block & 0x400000000) pBlock |= (1 << 43);
-	if (block & 0x4000000) pBlock |= (1 << 44);
-	if (block & 0x40000) pBlock |= (1 << 45);
-	if (block & 0x400) pBlock |= (1 << 46);
-	if (block & 0x40) pBlock |= (1 << 47);
-	if (block & 0x1000000000000000) pBlock |= (1 << 48); // 61	53	45	37	29	21	13	5
-	if (block & 0x10000000000000) pBlock |= (1 << 49);
-	if (block & 0x100000000000) pBlock |= (1 << 50);
-	if (block & 0x1000000000) pBlock |= (1 << 51);
-	if (block & 0x10000000) pBlock |= (1 << 52);
-	if (block & 0x100000) pBlock |= (1 << 53);
-	if (block & 0x1000) pBlock |= (1 << 54);
-	if (block & 0x10) pBlock |= (1 << 55);
-	if (block & 0x4000000000000000) pBlock |= (1 << 56); // 63	55	47	39	31	23	15	7
-	if (block & 0x40000000000000) pBlock |= (1 << 57);
-	if (block & 0x400000000000) pBlock |= (1 << 58);
-	if (block & 0x4000000000) pBlock |= (1 << 59);
-	if (block & 0x40000000) pBlock |= (1 << 60);
-	if (block & 0x400000) pBlock |= (1 << 61);
-	if (block & 0x4000) pBlock |= (1 << 62);
-	if (block & 0x40) pBlock |= (1 << 63);
+	if (block & 0x200000000000000) pBlock |= (ull)1;				//	58	50	42	34	26	18	10	2
+	if (block & 0x2000000000000) pBlock |= ((ull)1 << 1);
+	if (block & 0x20000000000) pBlock |= ((ull)1 << 2);
+	if (block & 0x200000000) pBlock |= ((ull)1 << 3);
+	if (block & 0x2000000) pBlock |= ((ull)1 << 4);
+	if (block & 0x20000) pBlock |= ((ull)1 << 5);
+	if (block & 0x200) pBlock |= ((ull)1 << 6);
+	if (block & 0x2) pBlock |= ((ull)1 << 7);
+	if (block & 0x800000000000000) pBlock |= ((ull)1 << 8);		//	60	52	44	36	28	20	12	4
+	if (block & 0x8000000000000) pBlock |= ((ull)1 << 9);
+	if (block & 0x80000000000) pBlock |= ((ull)1 << 10);
+	if (block & 0x800000000) pBlock |= ((ull)1 << 11);
+	if (block & 0x8000000) pBlock |= ((ull)1 << 12);
+	if (block & 0x80000) pBlock |= ((ull)1 << 13);
+	if (block & 0x800) pBlock |= ((ull)1 << 14);
+	if (block & 0x8) pBlock |= ((ull)1 << 15);
+	if (block & 0x2000000000000000) pBlock |= ((ull)1 << 16);	// 62	54	46	38	30	22	14	6
+	if (block & 0x20000000000000) pBlock |= ((ull)1 << 17);
+	if (block & 0x200000000000) pBlock |= ((ull)1 << 18);
+	if (block & 0x2000000000) pBlock |= ((ull)1 << 19);
+	if (block & 0x20000000) pBlock |= ((ull)1 << 20);
+	if (block & 0x200000) pBlock |= ((ull)1 << 21);
+	if (block & 0x2000) pBlock |= ((ull)1 << 22);
+	if (block & 0x20) pBlock |= ((ull)1 << 23);
+	if (block & 0x8000000000000000) pBlock |= ((ull)1 << 24);	// 64	56	48	40	32	24	16	8
+	if (block & 0x80000000000000) pBlock |= ((ull)1 << 25);
+	if (block & 0x800000000000) pBlock |= ((ull)1 << 26);
+	if (block & 0x8000000000) pBlock |= ((ull)1 << 27);
+	if (block & 0x80000000) pBlock |= ((ull)1 << 28);
+	if (block & 0x800000) pBlock |= ((ull)1 << 29);
+	if (block & 0x8000) pBlock |= ((ull)1 << 30);
+	if (block & 0x80) pBlock |= ((ull)1 << 31);
+	if (block & 0x100000000000000) pBlock |= ((ull)1 << 32); //	57	49	41	33	25	17	 9	1
+	if (block & 0x1000000000000) pBlock |= ((ull)1 << 33);
+	if (block & 0x10000000000) pBlock |= ((ull)1 << 34);
+	if (block & 0x100000000) pBlock |= ((ull)1 << 35);
+	if (block & 0x1000000) pBlock |= ((ull)1 << 36);
+	if (block & 0x10000) pBlock |= ((ull)1 << 37);
+	if (block & 0x100) pBlock |= ((ull)1 << 38);
+	if (block & 0x1) pBlock |= ((ull)1 << 39);
+	if (block & 0x400000000000000) pBlock |= ((ull)1 << 40); //	59	51	43	35	27	19	11	3
+	if (block & 0x4000000000000) pBlock |= ((ull)1 << 41);
+	if (block & 0x40000000000) pBlock |= ((ull)1 << 42);
+	if (block & 0x400000000) pBlock |= ((ull)1 << 43);
+	if (block & 0x4000000) pBlock |= ((ull)1 << 44);
+	if (block & 0x40000) pBlock |= ((ull)1 << 45);
+	if (block & 0x400) pBlock |= ((ull)1 << 46);
+	if (block & 0x40) pBlock |= ((ull)1 << 47);
+	if (block & 0x1000000000000000) pBlock |= ((ull)1 << 48); // 61	53	45	37	29	21	13	5
+	if (block & 0x10000000000000) pBlock |= ((ull)1 << 49);
+	if (block & 0x100000000000) pBlock |= ((ull)1 << 50);
+	if (block & 0x1000000000) pBlock |= ((ull)1 << 51);
+	if (block & 0x10000000) pBlock |= ((ull)1 << 52);
+	if (block & 0x100000) pBlock |= ((ull)1 << 53);
+	if (block & 0x1000) pBlock |= ((ull)1 << 54);
+	if (block & 0x10) pBlock |= ((ull)1 << 55);
+	if (block & 0x4000000000000000) pBlock |= ((ull)1 << 56); // 63	55	47	39	31	23	15	7
+	if (block & 0x40000000000000) pBlock |= ((ull)1 << 57);
+	if (block & 0x400000000000) pBlock |= ((ull)1 << 58);
+	if (block & 0x4000000000) pBlock |= ((ull)1 << 59);
+	if (block & 0x40000000) pBlock |= ((ull)1 << 60);
+	if (block & 0x400000) pBlock |= ((ull)1 << 61);
+	if (block & 0x4000) pBlock |= ((ull)1 << 62);
+	if (block & 0x40) pBlock |= ((ull)1 << 63);
 	return pBlock;
 };
 
@@ -494,54 +494,54 @@ void pc2(ull key, int round) {
 			46	42	50	36	29	32
 	*/
 	roundkey[round] = 0;
-	if (key & 0x2000) roundkey[round] |= 1;						//	14	17	11	24	1	5
-	if (key & 0x10000) roundkey[round] |= (1 << 1);
-	if (key & 0x400) roundkey[round] |= (1 << 2);
-	if (key & 0x800000) roundkey[round] |= (1 << 3);
-	if (key & 0x1) roundkey[round] |= (1 << 4);
-	if (key & 0x10) roundkey[round] |= (1 << 5);
-	if (key & 0x4) roundkey[round] |= (1 << 7);					//	3	28	15	6	21	10
-	if (key & 0x8000000) roundkey[round] |= (1 << 8);
-	if (key & 0x4000) roundkey[round] |= (1 << 9);
-	if (key & 0x20) roundkey[round] |= (1 << 10);
-	if (key & 0x100000) roundkey[round] |= (1 << 11);
-	if (key & 0x200) roundkey[round] |= (1 << 12);
-	if (key & 0x400000) roundkey[round] |= (1 << 14);			//	23	19	12	4	26	8
-	if (key & 0x40000) roundkey[round] |= (1 << 15);
-	if (key & 0x800) roundkey[round] |= (1 << 16);
-	if (key & 0x8) roundkey[round] |= (1 << 17);
-	if (key & 0x2000000) roundkey[round] |= (1 << 18);
-	if (key & 0x80) roundkey[round] |= (1 << 19);
-	if (key & 0x8000) roundkey[round] |= (1 << 21);				//	16	7	27	20	13	2
-	if (key & 0x40) roundkey[round] |= (1 << 22);
-	if (key & 0x4000000) roundkey[round] |= (1 << 23);
-	if (key & 0x80000) roundkey[round] |= (1 << 24);
-	if (key & 0x1000) roundkey[round] |= (1 << 25);
-	if (key & 0x2) roundkey[round] |= (1 << 26);
-	if (key & 0x10000000000) roundkey[round] |= (1 << 28);		//	41	52	31	37	47	55
-	if (key & 0x8000000000000) roundkey[round] |= (1 << 29);
-	if (key & 0x40000000) roundkey[round] |= (1 << 30);
-	if (key & 0x1000000000) roundkey[round] |= (1 << 31);
-	if (key & 0x400000000000) roundkey[round] |= (1 << 32);
-	if (key & 0x40000000000000) roundkey[round] |= (1 << 33);
-	if (key & 0x20000000) roundkey[round] |= (1 << 35);			//	30	40	51	45	33	48
-	if (key & 0x8000000000) roundkey[round] |= (1 << 36);
-	if (key & 0x4000000000000) roundkey[round] |= (1 << 37);
-	if (key & 0x100000000000) roundkey[round] |= (1 << 38);
-	if (key & 0x100000000) roundkey[round] |= (1 << 39);
-	if (key & 0x800000000000) roundkey[round] |= (1 << 40);
-	if (key & 0x80000000000) roundkey[round] |= (1 << 42);		//	44	49	39	56	34	53
-	if (key & 0x1000000000000) roundkey[round] |= (1 << 43);
-	if (key & 0x4000000000) roundkey[round] |= (1 << 44);
-	if (key & 0x80000000000000) roundkey[round] |= (1 << 45);
-	if (key & 0x200000000) roundkey[round] |= (1 << 46);
-	if (key & 0x10000000000000) roundkey[round] |= (1 << 47);
-	if (key & 0x200000000000) roundkey[round] |= (1 << 42);		//	46	42	50	36	29	32
-	if (key & 0x20000000000) roundkey[round] |= (1 << 43);
-	if (key & 0x2000000000000) roundkey[round] |= (1 << 44);
-	if (key & 0x800000000) roundkey[round] |= (1 << 45);
-	if (key & 0x10000000) roundkey[round] |= (1 << 46);
-	if (key & 0x80000000) roundkey[round] |= (1 << 47);
+	if (key & 0x2000) roundkey[round] |= (ull)1;							//	14	17	11	24	1	5
+	if (key & 0x10000) roundkey[round] |= ((ull)1 << 1);
+	if (key & 0x400) roundkey[round] |= ((ull)1 << 2);
+	if (key & 0x800000) roundkey[round] |= ((ull)1 << 3);
+	if (key & 0x1) roundkey[round] |= ((ull)1 << 4);
+	if (key & 0x10) roundkey[round] |= ((ull)1 << 5);
+	if (key & 0x4) roundkey[round] |= ((ull)1 << 7);						//	3	28	15	6	21	10
+	if (key & 0x8000000) roundkey[round] |= ((ull)1 << 8);
+	if (key & 0x4000) roundkey[round] |= ((ull)1 << 9);
+	if (key & 0x20) roundkey[round] |= ((ull)1 << 10);
+	if (key & 0x100000) roundkey[round] |= ((ull)1 << 11);
+	if (key & 0x200) roundkey[round] |= ((ull)1 << 12);
+	if (key & 0x400000) roundkey[round] |= ((ull)1 << 14);				//	23	19	12	4	26	8
+	if (key & 0x40000) roundkey[round] |= ((ull)1 << 15);
+	if (key & 0x800) roundkey[round] |= ((ull)1 << 16);
+	if (key & 0x8) roundkey[round] |= ((ull)1 << 17);
+	if (key & 0x2000000) roundkey[round] |= ((ull)1 << 18);
+	if (key & 0x80) roundkey[round] |= ((ull)1 << 19);
+	if (key & 0x8000) roundkey[round] |= ((ull)1 << 21);					//	16	7	27	20	13	2
+	if (key & 0x40) roundkey[round] |= ((ull)1 << 22);
+	if (key & 0x4000000) roundkey[round] |= ((ull)1 << 23);
+	if (key & 0x80000) roundkey[round] |= ((ull)1 << 24);
+	if (key & 0x1000) roundkey[round] |= ((ull)1 << 25);
+	if (key & 0x2) roundkey[round] |= ((ull)1 << 26);
+	if (key & 0x10000000000) roundkey[round] |= ((ull)1 << 28);			//	41	52	31	37	47	55
+	if (key & 0x8000000000000) roundkey[round] |= (ull)(1 << 29);
+	if (key & 0x40000000) roundkey[round] |= ((ull)1 << 30);
+	if (key & 0x1000000000) roundkey[round] |= ((ull)1 << 31);
+	if (key & 0x400000000000) roundkey[round] |= ((ull)1 << 32);
+	if (key & 0x40000000000000) roundkey[round] |= ((ull)1 << 33);
+	if (key & 0x20000000) roundkey[round] |= ((ull)1 << 35);		//	30	40	51	45	33	48
+	if (key & 0x8000000000) roundkey[round] |= ((ull)1 << 36);
+	if (key & 0x4000000000000) roundkey[round] |= ((ull)1 << 37);
+	if (key & 0x100000000000) roundkey[round] |= ((ull)1 << 38);
+	if (key & 0x100000000) roundkey[round] |= ((ull)1 << 39);
+	if (key & 0x800000000000) roundkey[round] |= ((ull)1 << 40);
+	if (key & 0x80000000000) roundkey[round] |= ((ull)1 << 42);		//	44	49	39	56	34	53
+	if (key & 0x1000000000000) roundkey[round] |= ((ull)1 << 43);
+	if (key & 0x4000000000) roundkey[round] |= ((ull)1 << 44);
+	if (key & 0x80000000000000) roundkey[round] |= ((ull)1 << 45);
+	if (key & 0x200000000) roundkey[round] |= ((ull)1 << 46);
+	if (key & 0x10000000000000) roundkey[round] |= ((ull)1 << 47);
+	if (key & 0x200000000000) roundkey[round] |= ((ull)1 << 42);	//	46	42	50	36	29	32
+	if (key & 0x20000000000) roundkey[round] |= ((ull)1 << 43);
+	if (key & 0x2000000000000) roundkey[round] |= ((ull)1 << 44);
+	if (key & 0x800000000) roundkey[round] |= ((ull)1 << 45);
+	if (key & 0x10000000) roundkey[round] |= ((ull)1 << 46);
+	if (key & 0x80000000) roundkey[round] |= ((ull)1 << 47);
 };
 
 //Compression Permutation Box to go from 64-bit key to 56-bit key - ARM
@@ -561,62 +561,62 @@ ull pc1(ull key) {
 			21	13	5	28	20	12	4
 	*/
 	ull pKey = 0;
-	if (key & 0x100000000000000) pKey |= 1;			//	57	49	41	33	25	17	9
-	if (key & 0x1000000000000) pKey |= (1 << 1);
-	if (key & 0x10000000000) pKey |= (1 << 2);
-	if (key & 0x100000000) pKey |= (1 << 3);
-	if (key & 0x1000000) pKey |= (1 << 4);
-	if (key & 0x10000) pKey |= (1 << 5);
-	if (key & 0x100) pKey |= (1 << 6);
-	if (key & 0x1) pKey |= (1 << 7);				//	1	58	50	42	34	26	18
-	if (key & 0x200000000000000) pKey |= (1 << 8);
-	if (key & 0x2000000000000) pKey |= (1 << 9);
-	if (key & 0x20000000000) pKey |= (1 << 10);
-	if (key & 0x200000000) pKey |= (1 << 11);
-	if (key & 0x2000000) pKey |= (1 << 12);
-	if (key & 0x20000) pKey |= (1 << 13);
-	if (key & 0x200) pKey |= (1 << 14);				//	10	2	59	51	43	35	27
-	if (key & 0x2) pKey |= (1 << 15);
-	if (key & 0x400000000000000) pKey |= (1 << 16);
-	if (key & 0x4000000000000) pKey |= (1 << 17);
-	if (key & 0x40000000000) pKey |= (1 << 18);
-	if (key & 0x400000000) pKey |= (1 << 19);
-	if (key & 0x4000000) pKey |= (1 << 20);
-	if (key & 0x40000) pKey |= (1 << 21);			//	19	11	3	60	52	44	36
-	if (key & 0x400) pKey |= (1 << 22);
-	if (key & 0x4) pKey |= (1 << 23);
-	if (key & 0x800000000000000) pKey |= (1 << 24);
-	if (key & 0x8000000000000) pKey |= (1 << 25);
-	if (key & 0x80000000000) pKey |= (1 << 26);
-	if (key & 0x800000000) pKey |= (1 << 27);
-	if (key & 0x4000000000000000) pKey |= (1 << 28);//	63	55	47	39	31	23	15
-	if (key & 0x40000000000000) pKey |= (1 << 29);
-	if (key & 0x400000000000) pKey |= (1 << 30);
-	if (key & 0x4000000000) pKey |= (1 << 31);
-	if (key & 0x40000000) pKey |= (1 << 32);
-	if (key & 0x400000) pKey |= (1 << 33);
-	if (key & 0x4000) pKey |= (1 << 34);
-	if (key & 0x40) pKey |= (1 << 35);				//	7	62	54	46	38	30	22
-	if (key & 0x2000000000000000) pKey |= (1 << 36);
-	if (key & 0x20000000000000) pKey |= (1 << 37);
-	if (key & 0x200000000000) pKey |= (1 << 38);
-	if (key & 0x2000000000) pKey |= (1 << 39);
-	if (key & 0x20000000) pKey |= (1 << 40);
-	if (key & 0x200000) pKey |= (1 << 41);
-	if (key & 0x2000) pKey |= (1 << 42);			//	14	6	61	53	45	37	29
-	if (key & 0x20) pKey |= (1 << 43);
-	if (key & 0x1000000000000000) pKey |= (1 << 44);
-	if (key & 0x10000000000000) pKey |= (1 << 45);
-	if (key & 0x100000000000) pKey |= (1 << 46);
-	if (key & 0x1000000000) pKey |= (1 << 47);
-	if (key & 0x10000000) pKey |= (1 << 48);
-	if (key & 0x100000) pKey |= (1 << 49);			//	21	13	5	28	20	12	4
-	if (key & 0x1000) pKey |= (1 << 50);
-	if (key & 0x10) pKey |= (1 << 51);
-	if (key & 0x8000000) pKey |= (1 << 52);
-	if (key & 0x80000) pKey |= (1 << 53);
-	if (key & 0x800) pKey |= (1 << 54);
-	if (key & 0x8) pKey |= (1 << 55);
+	if (key & 0x100000000000000) pKey |= (ull)1;			//	57	49	41	33	25	17	9
+	if (key & 0x1000000000000) pKey |= ((ull)1 << 1);
+	if (key & 0x10000000000) pKey |= ((ull)1 << 2);
+	if (key & 0x100000000) pKey |= ((ull)1 << 3);
+	if (key & 0x1000000) pKey |= ((ull)1 << 4);
+	if (key & 0x10000) pKey |= ((ull)1 << 5);
+	if (key & 0x100) pKey |= ((ull)1 << 6);
+	if (key & 0x1) pKey |= ((ull)1 << 7);					//	1	58	50	42	34	26	18
+	if (key & 0x200000000000000) pKey |= ((ull)1 << 8);
+	if (key & 0x2000000000000) pKey |= ((ull)1 << 9);
+	if (key & 0x20000000000) pKey |= ((ull)1 << 10);
+	if (key & 0x200000000) pKey |= ((ull)1 << 11);
+	if (key & 0x2000000) pKey |= ((ull)1 << 12);
+	if (key & 0x20000) pKey |= ((ull)1 << 13);
+	if (key & 0x200) pKey |= ((ull)1 << 14);				//	10	2	59	51	43	35	27
+	if (key & 0x2) pKey |= ((ull)1 << 15);
+	if (key & 0x400000000000000) pKey |= ((ull)1 << 16);
+	if (key & 0x4000000000000) pKey |= ((ull)1 << 17);
+	if (key & 0x40000000000) pKey |= ((ull)1 << 18);
+	if (key & 0x400000000) pKey |= ((ull)1 << 19);
+	if (key & 0x4000000) pKey |= ((ull)1 << 20);
+	if (key & 0x40000) pKey |= ((ull)1 << 21);				//	19	11	3	60	52	44	36
+	if (key & 0x400) pKey |= ((ull)1 << 22);
+	if (key & 0x4) pKey |= ((ull)1 << 23);
+	if (key & 0x800000000000000) pKey |= ((ull)1 << 24);
+	if (key & 0x8000000000000) pKey |= ((ull)1 << 25);
+	if (key & 0x80000000000) pKey |= ((ull)1 << 26);
+	if (key & 0x800000000) pKey |= ((ull)1 << 27);
+	if (key & 0x4000000000000000) pKey |= ((ull)1 << 28);	//	63	55	47	39	31	23	15
+	if (key & 0x40000000000000) pKey |= ((ull)1 << 29);
+	if (key & 0x400000000000) pKey |= ((ull)1 << 30);
+	if (key & 0x4000000000) pKey |= ((ull)1 << 31);
+	if (key & 0x40000000) pKey |= ((ull)1 << 32);
+	if (key & 0x400000) pKey |= ((ull)1 << 33);
+	if (key & 0x4000) pKey |= ((ull)1 << 34);
+	if (key & 0x40) pKey |= ((ull)1 << 35);					//	7	62	54	46	38	30	22
+	if (key & 0x2000000000000000) pKey |= ((ull)1 << 36);
+	if (key & 0x20000000000000) pKey |= ((ull)1 << 37);
+	if (key & 0x200000000000) pKey |= ((ull)1 << 38);
+	if (key & 0x2000000000) pKey |= ((ull)1 << 39);
+	if (key & 0x20000000) pKey |= ((ull)1 << 40);
+	if (key & 0x200000) pKey |= ((ull)1 << 41);
+	if (key & 0x2000) pKey |= ((ull)1 << 42);				//	14	6	61	53	45	37	29
+	if (key & 0x20) pKey |= ((ull)1 << 43);
+	if (key & 0x1000000000000000) pKey |= ((ull)1 << 44);
+	if (key & 0x10000000000000) pKey |= ((ull)1 << 45);
+	if (key & 0x100000000000) pKey |= ((ull)1 << 46);
+	if (key & 0x1000000000) pKey |= ((ull)1 << 47);
+	if (key & 0x10000000) pKey |= ((ull)1 << 48);
+	if (key & 0x100000) pKey |= ((ull)1 << 49);				//	21	13	5	28	20	12	4
+	if (key & 0x1000) pKey |= ((ull)1 << 50);
+	if (key & 0x10) pKey |= ((ull)1 << 51);
+	if (key & 0x8000000) pKey |= ((ull)1 << 52);
+	if (key & 0x80000) pKey |= ((ull)1 << 53);
+	if (key & 0x800) pKey |= ((ull)1 << 54);
+	if (key & 0x8) pKey |= ((ull)1 << 55);
 	return pKey;
 };
 
@@ -849,7 +849,7 @@ ull getHexfBytes(size_t bytesLeft) {
 //Creates Random Pad Bits
 ull getRandBytes(int numToPad) {
 	ull randBytes = 0;
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 	for (int i = 0; i < numToPad; i++) {
 		randBytes <<= 8;
 		randBytes |= (rand() % 255);
@@ -873,7 +873,7 @@ int main(int argc, char* argv[]){
 	string action, mode, key;
 	streampos begF, endF;
 	ull hKey, block;
-	size_t bytesLeft, size, shiftAmt, writeSize;
+	int bytesLeft, size, shiftAmt, writeSize;
 	errno_t err;
 	
 	if (argc != 6){

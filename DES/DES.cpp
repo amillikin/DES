@@ -406,70 +406,70 @@ ull ip(ull block) {
 		63	55	47	39	31	23	15	7
 	*/
 	ull pBlock = 0;
-	if (block & 0x200000000000000) pBlock |= (1 << 67); //	58	50	42	34	26	18	10	2
-	if (block & 0x2000000000000) pBlock |= (1 << 49);
-	if (block & 0x20000000000) pBlock |= (1 << 41);
-	if (block & 0x200000000) pBlock |= (1 << 33);
-	if (block & 0x2000000) pBlock |= (1 << 25);
-	if (block & 0x20000) pBlock |= (1 << 17);
-	if (block & 0x200) pBlock |= (1 << 9);
-	if (block & 0x2) pBlock |= (1 << 1);
-	if (block & 0x800000000000000) pBlock |= (1 << 59); //	60	52	44	36	28	20	12	4
-	if (block & 0x8000000000000) pBlock |= (1 << 51);
-	if (block & 0x80000000000) pBlock |= (1 << 43);
-	if (block & 0x800000000) pBlock |= (1 << 35);
-	if (block & 0x8000000) pBlock |= (1 << 27);
-	if (block & 0x80000) pBlock |= (1 << 19);
-	if (block & 0x800) pBlock |= (1 << 11);
-	if (block & 0x8) pBlock |= (1 << 3);
-	if (block & 0x2000000000000000) pBlock |= (1 << 61); // 62	54	46	38	30	22	14	6
-	if (block & 0x20000000000000) pBlock |= (1 << 53);
-	if (block & 0x200000000000) pBlock |= (1 << 45);
-	if (block & 0x2000000000) pBlock |= (1 << 37);
-	if (block & 0x20000000) pBlock |= (1 << 29);
+	if (block & 0x200000000000000) pBlock |= 1; //	58	50	42	34	26	18	10	2
+	if (block & 0x2000000000000) pBlock |= (1 << 1);
+	if (block & 0x20000000000) pBlock |= (1 << 2);
+	if (block & 0x200000000) pBlock |= (1 << 3);
+	if (block & 0x2000000) pBlock |= (1 << 4);
+	if (block & 0x20000) pBlock |= (1 << 5);
+	if (block & 0x200) pBlock |= (1 << 6);
+	if (block & 0x2) pBlock |= (1 << 7);
+	if (block & 0x800000000000000) pBlock |= (1 << 8); //	60	52	44	36	28	20	12	4
+	if (block & 0x8000000000000) pBlock |= (1 << 9);
+	if (block & 0x80000000000) pBlock |= (1 << 10);
+	if (block & 0x800000000) pBlock |= (1 << 11);
+	if (block & 0x8000000) pBlock |= (1 << 12);
+	if (block & 0x80000) pBlock |= (1 << 13);
+	if (block & 0x800) pBlock |= (1 << 14);
+	if (block & 0x8) pBlock |= (1 << 15);
+	if (block & 0x2000000000000000) pBlock |= (1 << 16); // 62	54	46	38	30	22	14	6
+	if (block & 0x20000000000000) pBlock |= (1 << 17);
+	if (block & 0x200000000000) pBlock |= (1 << 18);
+	if (block & 0x2000000000) pBlock |= (1 << 19);
+	if (block & 0x20000000) pBlock |= (1 << 20);
 	if (block & 0x200000) pBlock |= (1 << 21);
-	if (block & 0x2000) pBlock |= (1 << 13);
-	if (block & 0x20) pBlock |= (1 << 5);
-	if (block & 0x8000000000000000) pBlock |= (1 << 63); // 64	56	48	40	32	24	16	8
-	if (block & 0x80000000000000) pBlock |= (1 << 55);
-	if (block & 0x800000000000) pBlock |= (1 << 47);
-	if (block & 0x8000000000) pBlock |= (1 << 39);
-	if (block & 0x80000000) pBlock |= (1 << 31);
-	if (block & 0x800000) pBlock |= (1 << 23);
-	if (block & 0x8000) pBlock |= (1 << 15);
-	if (block & 0x80) pBlock |= (1 << 7);
-	if (block & 0x100000000000000) pBlock |= (1 << 56); //	57	49	41	33	25	17	 9	1
-	if (block & 0x1000000000000) pBlock |= (1 << 48);
-	if (block & 0x10000000000) pBlock |= (1 << 40);
-	if (block & 0x100000000) pBlock |= (1 << 32);
-	if (block & 0x1000000) pBlock |= (1 << 24);
-	if (block & 0x10000) pBlock |= (1 << 16);
-	if (block & 0x100) pBlock |= (1 << 8);
-	if (block & 0x1) pBlock |= 1;
-	if (block & 0x400000000000000) pBlock |= (1 << 58); //	59	51	43	35	27	19	11	3
-	if (block & 0x4000000000000) pBlock |= (1 << 50);
+	if (block & 0x2000) pBlock |= (1 << 22);
+	if (block & 0x20) pBlock |= (1 << 23);
+	if (block & 0x8000000000000000) pBlock |= (1 << 24); // 64	56	48	40	32	24	16	8
+	if (block & 0x80000000000000) pBlock |= (1 << 25);
+	if (block & 0x800000000000) pBlock |= (1 << 26);
+	if (block & 0x8000000000) pBlock |= (1 << 27);
+	if (block & 0x80000000) pBlock |= (1 << 28);
+	if (block & 0x800000) pBlock |= (1 << 29);
+	if (block & 0x8000) pBlock |= (1 << 30);
+	if (block & 0x80) pBlock |= (1 << 31);
+	if (block & 0x100000000000000) pBlock |= (1 << 32); //	57	49	41	33	25	17	 9	1
+	if (block & 0x1000000000000) pBlock |= (1 << 33);
+	if (block & 0x10000000000) pBlock |= (1 << 34);
+	if (block & 0x100000000) pBlock |= (1 << 35);
+	if (block & 0x1000000) pBlock |= (1 << 36);
+	if (block & 0x10000) pBlock |= (1 << 37);
+	if (block & 0x100) pBlock |= (1 << 38);
+	if (block & 0x1) pBlock |= (1 << 39);
+	if (block & 0x400000000000000) pBlock |= (1 << 40); //	59	51	43	35	27	19	11	3
+	if (block & 0x4000000000000) pBlock |= (1 << 41);
 	if (block & 0x40000000000) pBlock |= (1 << 42);
-	if (block & 0x400000000) pBlock |= (1 << 34);
-	if (block & 0x4000000) pBlock |= (1 << 26);
-	if (block & 0x40000) pBlock |= (1 << 18);
-	if (block & 0x400) pBlock |= (1 << 10);
-	if (block & 0x40) pBlock |= (1 << 2);
-	if (block & 0x1000000000000000) pBlock |= (1 << 60); // 61	53	45	37	29	21	13	5
-	if (block & 0x10000000000000) pBlock |= (1 << 52);
-	if (block & 0x100000000000) pBlock |= (1 << 44);
-	if (block & 0x1000000000) pBlock |= (1 << 36);
-	if (block & 0x10000000) pBlock |= (1 << 28);
-	if (block & 0x100000) pBlock |= (1 << 20);
-	if (block & 0x1000) pBlock |= (1 << 12);
-	if (block & 0x10) pBlock |= (1 << 4);
-	if (block & 0x4000000000000000) pBlock |= (1 << 62); // 63	55	47	39	31	23	15	7
-	if (block & 0x40000000000000) pBlock |= (1 << 54);
-	if (block & 0x400000000000) pBlock |= (1 << 46);
-	if (block & 0x4000000000) pBlock |= (1 << 38);
-	if (block & 0x40000000) pBlock |= (1 << 30);
-	if (block & 0x400000) pBlock |= (1 << 22);
-	if (block & 0x4000) pBlock |= (1 << 14);
-	if (block & 0x40) pBlock |= (1 << 6);
+	if (block & 0x400000000) pBlock |= (1 << 43);
+	if (block & 0x4000000) pBlock |= (1 << 44);
+	if (block & 0x40000) pBlock |= (1 << 45);
+	if (block & 0x400) pBlock |= (1 << 46);
+	if (block & 0x40) pBlock |= (1 << 47);
+	if (block & 0x1000000000000000) pBlock |= (1 << 48); // 61	53	45	37	29	21	13	5
+	if (block & 0x10000000000000) pBlock |= (1 << 49);
+	if (block & 0x100000000000) pBlock |= (1 << 50);
+	if (block & 0x1000000000) pBlock |= (1 << 51);
+	if (block & 0x10000000) pBlock |= (1 << 52);
+	if (block & 0x100000) pBlock |= (1 << 53);
+	if (block & 0x1000) pBlock |= (1 << 54);
+	if (block & 0x10) pBlock |= (1 << 55);
+	if (block & 0x4000000000000000) pBlock |= (1 << 56); // 63	55	47	39	31	23	15	7
+	if (block & 0x40000000000000) pBlock |= (1 << 57);
+	if (block & 0x400000000000) pBlock |= (1 << 58);
+	if (block & 0x4000000000) pBlock |= (1 << 59);
+	if (block & 0x40000000) pBlock |= (1 << 60);
+	if (block & 0x400000) pBlock |= (1 << 61);
+	if (block & 0x4000) pBlock |= (1 << 62);
+	if (block & 0x40) pBlock |= (1 << 63);
 	return pBlock;
 };
 
@@ -741,6 +741,10 @@ void keygen(ull key) {
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2(((C << 28) | D), 15);
 
+	for (int i = 0; i < 16; i++) {
+		cout << hex << roundkey[i] << endl;
+	}
+	
 }
 
 //Organizes the steps for encryption - ARM

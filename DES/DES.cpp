@@ -940,10 +940,6 @@ void keygen(ull key) {
 	C = (0xfffffff & (C << 1)) | (0x1 & (C >> 27));
 	D = (0xfffffff & (D << 1)) | (0x1 & (D >> 27));
 	pc2(((C << 28) | D), 15);
-
-	for (int i = 0; i < 16; i++) {
-		cout << hex << roundkey[i] << endl;
-	}
 	
 }
 
@@ -960,14 +956,10 @@ ull des(ull block, string actionType) {
 		leftOut and rightOut are joined back together to form 64-bit output
 		Output passed through final permutation before returning to be saved in the outFile
 	*/
-	cout << hex << block << endl;
 	ull left, right, tempR;
 	block = ip(block);
-	cout << hex << block << endl;
 	left = ((block >> 32) & 0xffffffff);
-	cout << hex << left << endl;
 	right = (block & 0xffffffff);
-	cout << hex << right << endl;
 	for (int i = 0; i <= 15; i++) {
 		//Direction keys are applied is determined by actionType passed in
 		if (actionType == "E"){ 
@@ -990,9 +982,7 @@ ull des(ull block, string actionType) {
 		}
 	}
 	block = ((right << 32) | left);
-	cout << hex << block << endl;
 	block = fp(block);
-	cout << hex << block << endl;
 	return block;
 }
 
@@ -1076,7 +1066,7 @@ int main(int argc, char* argv[]){
 	double secondsElapsed;
 	string action, mode, key;
 	streampos begF, endF;
-	ull hKey, block;
+	ull hKey, block, iv;
 	int bytesLeft, size, shiftAmt, writeSize;
 	errno_t err;
 	
@@ -1099,7 +1089,6 @@ int main(int argc, char* argv[]){
 	} 
 	else { 
 		hKey = strtoull(argv[2], nullptr, 16);
-		//cout << hex << hKey << endl;
 	}
 
 	mode = upCase(argv[3]);
@@ -1145,21 +1134,33 @@ int main(int argc, char* argv[]){
 	block = 0;
 	writeSize = 8;
 	keygen(hKey);
+
 	if (action == "E") {
 		block = size;
 		block = ((getRandBytes(32) << 32) | size);
+		if (mode == "CBC") {
+			iv = getRandBytes(64);
+			iv = des(iv, action);
+			block ^= iv; //XOR size block with iv before byteswapping
+			iv = _byteswap_uint64(iv);
+			fwrite(reinterpret_cast<char*>(&iv), 8, 1, outStream);
+		}
 		block = des(block, action);
-		cout << hex << block << endl;
 		block = _byteswap_uint64(block);
-		cout << hex << block << endl;
 		fwrite(reinterpret_cast<char*>(&block), 8, 1, outStream);
 		bytesLeft = (size % 8);
 	}
 	else {
+		if (mode == "CBC") { 
+			fread_s(reinterpret_cast<char*>(&iv), 8, 1, 8, inStream);
+			iv = _byteswap_uint64(iv);
+			iv = des(iv, action);
+		}
 		fread_s(reinterpret_cast<char*>(&block), 8, 1, 8, inStream);
-		cout << hex << block << endl;
 		block = _byteswap_uint64(block);
-		cout << hex << block << endl;
+		if (mode == "CBD") {
+			block ^= iv;
+		}
 		block = des(block, action);
 		bytesLeft = ((size - 8) - (block & 0xffffffff));
 	};
@@ -1176,18 +1177,20 @@ int main(int argc, char* argv[]){
 
 	// Read file while successfully reading eight 1-byte items, pass through DES, write to outFile.
 	while(fread_s(reinterpret_cast<char*>(&block), 8, 1, 8, inStream) == 8){
-		cout << hex << block << endl;
 		block = _byteswap_uint64(block);
-		cout << hex << block << endl;
+		if (mode == "CBC") {
+			block ^= iv;
+		}
 		block = des(block, action);
 		if (action == "D" && (ftell(inStream) == size )) {
 			shiftAmt = (bytesLeft * 8);
 			block >>= shiftAmt;
 			writeSize = (8-bytesLeft);
 		};
-		cout << hex << block << endl;
+		if (mode == "CBC") {
+			iv = block;
+		}
 		block = _byteswap_uint64(block);
-		cout << hex << block << endl;
 		fwrite(reinterpret_cast<char*>(&block), writeSize, 1, outStream);
 		block = 0;
 	};
@@ -1198,6 +1201,9 @@ int main(int argc, char* argv[]){
 		shiftAmt = ((8 - bytesLeft) * 8);
 		block <<= shiftAmt;
 		block |= getRandBytes(8 - bytesLeft);
+		if (mode == "CBC") {
+			block ^= iv;
+		}
 		block = des(block, action);
 		block = _byteswap_uint64(block);
 		fwrite(reinterpret_cast<char*>(&block), writeSize, 1, outStream);

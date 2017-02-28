@@ -1211,7 +1211,7 @@ int main(int argc, char* argv[]) {
 			block ^= iv;
 			iv = des(iv, action);
 			iv = _byteswap_uint64(iv);
-			fwrite(reinterpret_cast<char*>(&iv), 8, 1, outStream);
+			fwrite(reinterpret_cast<char*>(&iv), 1, 8, outStream);
 		}
 
 		block = des(block, action);
@@ -1221,7 +1221,7 @@ int main(int argc, char* argv[]) {
 		}
 
 		block = _byteswap_uint64(block);
-		fwrite(reinterpret_cast<char*>(&block), 8, 1, outStream);
+		fwrite(reinterpret_cast<char*>(&block), 1, 8, outStream);
 		bytesLeft = (size % 8);
 	}
 	else {
@@ -1246,9 +1246,12 @@ int main(int argc, char* argv[]) {
 		//If CBC, xor block with iv.
 		if (mode == "CBC") {
 			block ^= iv;
+			iv = tempIV;
+			bytesLeft = ((size - 16) - (block & 0xffffffff));
 		}
-
-		bytesLeft = ((size - 8) - (block & 0xffffffff));
+		else {
+			bytesLeft = ((size - 8) - (block & 0xffffffff));
+		}
 	};
 
 
@@ -1258,6 +1261,10 @@ int main(int argc, char* argv[]) {
 		fread_s(reinterpret_cast<char*>(&block), bytesLeft, 1, bytesLeft, inStream);
 		block = _byteswap_uint64(block);
 		block = (((block & getHexfBytes(bytesLeft)) << (8 - bytesLeft)) | (getRandBits(8 - bytesLeft)));
+		if (mode == "CBC") {
+			block ^= iv;
+		}
+
 		block = des(block, action);
 	}
 
@@ -1290,10 +1297,12 @@ int main(int argc, char* argv[]) {
 			shiftAmt = (bytesLeft * 8);
 			block >>= shiftAmt;
 			writeSize = (8 - bytesLeft);
+			fwrite(reinterpret_cast<char*>(&block), 1, writeSize, outStream);
+			goto END;
 		}
 
 		block = _byteswap_uint64(block);
-		fwrite(reinterpret_cast<char*>(&block), writeSize, 1, outStream);
+		fwrite(reinterpret_cast<char*>(&block), 1, writeSize, outStream);
 		block = 0;
 	};
 
@@ -1315,9 +1324,10 @@ int main(int argc, char* argv[]) {
 		}
 
 		block = _byteswap_uint64(block);
-		fwrite(reinterpret_cast<char*>(&block), writeSize, 1, outStream);
+		fwrite(reinterpret_cast<char*>(&block), 1, writeSize, outStream);
 	}
 
+END:
 	fclose(inStream);
 	fclose(outStream);
 	endTime = clock();

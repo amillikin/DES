@@ -5,7 +5,7 @@
 *				 Input Parameters: DES <-action> <key> <mode> <infile> <outfile>.			*
 *				 Accepted Actions: "-E" (encrypt), "-D" (decrypt)							*
 *				 Accepted Keys: 16-Bit Hex string, 8-bit Char string						*
-*				 Accepted Modes: EBC (coming soon, CBC)										*
+*				 Accepted Modes: EBC, CBC													*
 *																							*
 *																							*
 *	AUTHOR: Aaron Millikin											START DATE: 2/7/2017	*
@@ -1201,29 +1201,29 @@ int main(int argc, char* argv[]) {
 	if (action == "E") {
 		block = size;
 		block = ((getRandBytes(32) << 32) | size);
-		/*if (mode == "CBC") {
+		if (mode == "CBC") {
 			iv = getRandBytes(64);
 			iv = des(iv, action);
 			block ^= iv; //XOR size block with iv before byteswapping
 			iv = _byteswap_uint64(iv);
 			fwrite(reinterpret_cast<char*>(&iv), 8, 1, outStream);
-		}*/
+		}
 		block = des(block, action);
 		block = _byteswap_uint64(block);
 		fwrite(reinterpret_cast<char*>(&block), 8, 1, outStream);
 		bytesLeft = (size % 8);
 	}
 	else {
-		/*if (mode == "CBC") {
+		if (mode == "CBC") {
 			fread_s(reinterpret_cast<char*>(&iv), 8, 1, 8, inStream);
 			iv = _byteswap_uint64(iv);
 			iv = des(iv, action);
-		}*/
+		}
 		fread_s(reinterpret_cast<char*>(&block), 8, 1, 8, inStream);
 		block = _byteswap_uint64(block);
-		/*if (mode == "CBD") {
+		if (mode == "CBC") {
 			block ^= iv;
-		}*/
+		}
 		block = des(block, action);
 		bytesLeft = ((size - 8) - (block & 0xffffffff));
 	};
@@ -1241,18 +1241,18 @@ int main(int argc, char* argv[]) {
 	// Read file while successfully reading eight 1-byte items, pass through DES, write to outFile.
 	while (fread_s(reinterpret_cast<char*>(&block), 8, 1, 8, inStream) == 8) {
 		block = _byteswap_uint64(block);
-		/*if (mode == "CBC") {
+		if (mode == "CBC") {
 			block ^= iv;
-		}*/
+		}
 		block = des(block, action);
 		if (action == "D" && (ftell(inStream) == size)) {
 			shiftAmt = (bytesLeft * 8);
 			block >>= shiftAmt;
 			writeSize = (8 - bytesLeft);
 		};
-		/*if (mode == "CBC") {
+		if (mode == "CBC") {
 			iv = block;
-		}*/
+		}
 		block = _byteswap_uint64(block);
 		fwrite(reinterpret_cast<char*>(&block), writeSize, 1, outStream);
 		block = 0;
@@ -1264,9 +1264,9 @@ int main(int argc, char* argv[]) {
 		shiftAmt = ((8 - bytesLeft) * 8);
 		block <<= shiftAmt;
 		block |= getRandBytes(8 - bytesLeft);
-		/*if (mode == "CBC") {
+		if (mode == "CBC") {
 			block ^= iv;
-		}*/
+		}
 		block = des(block, action);
 		block = _byteswap_uint64(block);
 		fwrite(reinterpret_cast<char*>(&block), writeSize, 1, outStream);

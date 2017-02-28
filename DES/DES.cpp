@@ -1203,8 +1203,8 @@ int main(int argc, char* argv[]) {
 		block = ((getRandBytes(32) << 32) | size);
 		if (mode == "CBC") {
 			iv = getRandBytes(64);
+			block ^= iv; //XOR size block with iv before encrypting
 			iv = des(iv, action);
-			block ^= iv; //XOR size block with iv before byteswapping
 			iv = _byteswap_uint64(iv);
 			fwrite(reinterpret_cast<char*>(&iv), 8, 1, outStream);
 		}
@@ -1221,10 +1221,10 @@ int main(int argc, char* argv[]) {
 		}
 		fread_s(reinterpret_cast<char*>(&block), 8, 1, 8, inStream);
 		block = _byteswap_uint64(block);
+		block = des(block, action);
 		if (mode == "CBC") {
 			block ^= iv;
 		}
-		block = des(block, action);
 		bytesLeft = ((size - 8) - (block & 0xffffffff));
 	};
 
@@ -1241,10 +1241,13 @@ int main(int argc, char* argv[]) {
 	// Read file while successfully reading eight 1-byte items, pass through DES, write to outFile.
 	while (fread_s(reinterpret_cast<char*>(&block), 8, 1, 8, inStream) == 8) {
 		block = _byteswap_uint64(block);
-		if (mode == "CBC") {
+		if (mode == "CBC" && action == "E") {
 			block ^= iv;
 		}
 		block = des(block, action);
+		if (mode == "CBC" && action == "D") {
+			block ^= iv;
+		}
 		if (action == "D" && (ftell(inStream) == size)) {
 			shiftAmt = (bytesLeft * 8);
 			block >>= shiftAmt;
@@ -1264,10 +1267,13 @@ int main(int argc, char* argv[]) {
 		shiftAmt = ((8 - bytesLeft) * 8);
 		block <<= shiftAmt;
 		block |= getRandBytes(8 - bytesLeft);
-		if (mode == "CBC") {
+		if (mode == "CBC" && action == "E") {
 			block ^= iv;
 		}
 		block = des(block, action);
+		if (mode == "CBC" && action == "D") {
+			block ^= iv;
+		}
 		block = _byteswap_uint64(block);
 		fwrite(reinterpret_cast<char*>(&block), writeSize, 1, outStream);
 	}

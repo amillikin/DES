@@ -1103,7 +1103,7 @@ ull getHexfBytes(size_t bytesLeft) {
 }
 
 //Creates Random Pad Bits
-ull getRandBytes(int numToPad) {
+ull getRandBits(int numToPad) {
 	ull randBytes = 0;
 	srand((unsigned int)time(NULL));
 	for (int i = 0; i < numToPad; i++) {
@@ -1130,7 +1130,7 @@ int main(int argc, char* argv[]) {
 	double secondsElapsed;
 	string action, mode, key;
 	streampos begF, endF;
-	ull hKey, block, iv;
+	ull hKey, block, iv, tempIV;
 	int bytesLeft, size, shiftAmt, writeSize;
 	errno_t err;
 
@@ -1199,32 +1199,55 @@ int main(int argc, char* argv[]) {
 	keygen(hKey);
 
 	if (action == "E") {
+		//Encrypting size block. Pad size with 32 random bytes.
+		//If CBC, first block is iv set to 64 random bits. XOR plaintext with IV.
+		//		  Then write encrypted iv to outfile. Next iv = size block ciphertext.
+
 		block = size;
-		block = ((getRandBytes(32) << 32) | size);
+		block = ((getRandBits(32) << 32) | size);
+
 		if (mode == "CBC") {
-			iv = getRandBytes(64);
-			block ^= iv; //XOR size block with iv before encrypting
+			iv = getRandBits(64);
+			block ^= iv;
 			iv = des(iv, action);
 			iv = _byteswap_uint64(iv);
 			fwrite(reinterpret_cast<char*>(&iv), 8, 1, outStream);
 		}
+
 		block = des(block, action);
+
+		if (mode == "CBC") {
+			iv = block;
+		}
+
 		block = _byteswap_uint64(block);
 		fwrite(reinterpret_cast<char*>(&block), 8, 1, outStream);
 		bytesLeft = (size % 8);
 	}
 	else {
+		//Decrypting. If CBC, read first block -> decrypt = IV. Then read size block.
+		//			  Else, just read size block.
 		if (mode == "CBC") {
 			fread_s(reinterpret_cast<char*>(&iv), 8, 1, 8, inStream);
 			iv = _byteswap_uint64(iv);
 			iv = des(iv, action);
 		}
+
 		fread_s(reinterpret_cast<char*>(&block), 8, 1, 8, inStream);
 		block = _byteswap_uint64(block);
+
+		//If CBC, next round's iv = ciphertext block
+		if (mode == "CBC") {
+			tempIV = block;
+		}
+
 		block = des(block, action);
+
+		//If CBC, xor block with iv.
 		if (mode == "CBC") {
 			block ^= iv;
 		}
+
 		bytesLeft = ((size - 8) - (block & 0xffffffff));
 	};
 
@@ -1234,28 +1257,41 @@ int main(int argc, char* argv[]) {
 	if (size < 8) {
 		fread_s(reinterpret_cast<char*>(&block), bytesLeft, 1, bytesLeft, inStream);
 		block = _byteswap_uint64(block);
-		block = (((block & getHexfBytes(bytesLeft)) << (8 - bytesLeft)) | (getRandBytes(8 - bytesLeft)));
+		block = (((block & getHexfBytes(bytesLeft)) << (8 - bytesLeft)) | (getRandBits(8 - bytesLeft)));
 		block = des(block, action);
 	}
 
 	// Read file while successfully reading eight 1-byte items, pass through DES, write to outFile.
 	while (fread_s(reinterpret_cast<char*>(&block), 8, 1, 8, inStream) == 8) {
 		block = _byteswap_uint64(block);
+
+		//If CBC and Encrypting, XOR block with iv
+		//If CBC and Decrypting, save ciphertext block for next iv in tempIV
 		if (mode == "CBC" && action == "E") {
 			block ^= iv;
 		}
+		else if (mode == "CBC" && action == "D") {
+			tempIV = block;
+		}
+
 		block = des(block, action);
+
+		//If CBC and Encrypting, set next iv to ciphertext block
+		//If CBC and Decrypting, XOR block with iv, set next iv from tempIV
 		if (mode == "CBC" && action == "D") {
 			block ^= iv;
+			iv = tempIV;
 		}
+		else if (mode == "CBC" && action == "E") {
+			iv = block;
+		}
+
 		if (action == "D" && (ftell(inStream) == size)) {
 			shiftAmt = (bytesLeft * 8);
 			block >>= shiftAmt;
 			writeSize = (8 - bytesLeft);
-		};
-		if (mode == "CBC") {
-			iv = block;
 		}
+
 		block = _byteswap_uint64(block);
 		fwrite(reinterpret_cast<char*>(&block), writeSize, 1, outStream);
 		block = 0;
@@ -1266,14 +1302,18 @@ int main(int argc, char* argv[]) {
 		block &= getHexfBytes(bytesLeft);
 		shiftAmt = ((8 - bytesLeft) * 8);
 		block <<= shiftAmt;
-		block |= getRandBytes(8 - bytesLeft);
+		block |= getRandBits(8 - bytesLeft);
+
 		if (mode == "CBC" && action == "E") {
 			block ^= iv;
 		}
+
 		block = des(block, action);
+
 		if (mode == "CBC" && action == "D") {
 			block ^= iv;
 		}
+
 		block = _byteswap_uint64(block);
 		fwrite(reinterpret_cast<char*>(&block), writeSize, 1, outStream);
 	}
